@@ -1,3 +1,9 @@
+using ProyectoJuegoDeRol.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+
 namespace ProyectoJuegoDeRol.Services
 {
     public class Juego
@@ -18,7 +24,6 @@ namespace ProyectoJuegoDeRol.Services
             personajes.Add(await fabrica.CrearPersonajeAleatorioAsync());
             }
 
-            principe = fabrica.CrearPrincipe();
             MostrarPantallaInicial();
             Console.Clear();
             SeleccionarPersonaje();
