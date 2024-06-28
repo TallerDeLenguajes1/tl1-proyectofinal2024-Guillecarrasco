@@ -5,7 +5,7 @@ namespace ProyectoJuegoDeRol.Models
     {
         public string Nombre { get; set; }=string.Empty;
         public int Edad { get; set; }
-        public Provincias Provincia { get; set; }
+        public Provincia Provincia { get; set; }
         public int Carisma { get; set; }
         public int Inteligencia { get; set; }
         public int Atractivo { get; set; }

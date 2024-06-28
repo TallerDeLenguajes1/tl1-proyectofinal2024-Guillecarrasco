@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 namespace ProyectoJuegoDeRol.Models
 {
-    public enum Provincias{
+    public enum Provincia{
         Tucumán,
         SanLuis,
         SanJuan,
