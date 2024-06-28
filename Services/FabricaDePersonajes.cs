@@ -25,7 +25,17 @@ namespace ProyectoJuegoDeRol.Services
                 Hobbie = hobbies[random.Next(hobbies.Length)]
             };
         }
-
-
+        public Principe CrearPrincipe()
+        {
+            var hobbies = Enum.GetValues(typeof(Hobbie)).Cast<Hobbie>().ToArray();
+            return new Principe
+            {
+                Nombre = "Príncipe",
+                Inteligencia = random.Next(1, 11),
+                Atractivo = random.Next(1, 11),
+                Carisma = random.Next(1, 11),
+                Hobbie = hobbies[random.Next(0,hobbies.Length)]
+            };
+        }
     }
 }
