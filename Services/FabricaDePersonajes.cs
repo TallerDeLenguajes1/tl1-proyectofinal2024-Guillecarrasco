@@ -1,4 +1,5 @@
 using ProyectoJuegoDeRol.Models;
+using ProyectoJuegoDeRol.Utils;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace ProyectoJuegoDeRol.Services
         {
             var hobbies = Enum.GetValues(typeof(Hobbie)).Cast<Hobbie>().ToArray();
             var Provincias = Enum.GetValues(typeof(Provincia)).Cast<Provincia>().ToArray();
-            string nombre ="Desconocido";
+            string nombre = await GeneradorDeNombres.GenerarNombreAsync();
 
             return new Personaje
             {
