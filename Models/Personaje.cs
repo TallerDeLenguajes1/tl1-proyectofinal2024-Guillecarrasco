@@ -10,6 +10,10 @@ namespace ProyectoJuegoDeRol.Models
         public int Inteligencia { get; set; }
         public int Atractivo { get; set; }
         public Hobbie Hobbie { get; set; }
-
+        
+        public void MostrarAtributos()
+        {
+            Console.WriteLine($"Nombre: {Nombre}, Edad: {Edad}, Provincia: {Provincia}, Carisma: {Carisma}, Inteligencia: {Inteligencia}, Atractivo: {Atractivo}, Hobbie: {Hobbie}");
+        }
     }
 }
