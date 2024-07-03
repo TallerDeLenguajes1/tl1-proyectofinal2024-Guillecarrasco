@@ -88,7 +88,57 @@ namespace ProyectoJuegoDeRol.Services
 
          private void Jugar()
         {
-            Console.Clear();
+            int semana = 1;
+            bool eliminado = false;
+
+            while (personajes.Count > 3 && !eliminado)
+            {
+                Console.Clear();
+                Console.WriteLine($"\nSemana {semana}:");
+
+                RealizarAccionesSemanales();
+
+                foreach (var personaje in personajes)
+                {
+                    RealizarAccionesAleatorias(personaje);
+                }
+
+                Console.Clear();
+                Console.WriteLine("\nCompatibilidad con el príncipe:");
+                foreach (var personaje in personajes)
+                {
+                    double compatibilidadActual = CalcularCompatibilidad(personaje);
+                    double cambioCompatibilidad = compatibilidadActual - compatibilidadAnterior[personaje];
+                    Console.WriteLine($"{personaje.Datos.Nombre}: {compatibilidadActual:F2}% (Cambio: {cambioCompatibilidad:F2}%)");
+                    compatibilidadAnterior[personaje] = compatibilidadActual;
+                }
+
+                double compatibilidadPrincipalActual = CalcularCompatibilidad(personajePrincipal);
+                double cambioCompatibilidadPrincipal = compatibilidadPrincipalActual - compatibilidadAnterior[personajePrincipal];
+                Console.WriteLine($"Tu personaje: {compatibilidadPrincipalActual:F2}% (Cambio: {cambioCompatibilidadPrincipal:F2}%)");
+                compatibilidadAnterior[personajePrincipal] = compatibilidadPrincipalActual;
+
+                eliminado = EliminarPersonajesConMenorCompatibilidad(personajePrincipal);
+
+                historial.Add($"Semana {semana}: {personajePrincipal.Datos.Nombre} realizó acciones.");
+                historialJson.GuardarHistorial(historial, "Data/historial.json");
+
+                semana++;
+                Console.WriteLine("Presiona cualquier tecla para continuar...");
+                Console.ReadKey();
+            }
+
+            if (!eliminado && EsGanador(personajePrincipal))
+            {
+                Console.WriteLine("¡Felicidades! Has sido seleccionada como la princesa.");
+            }
+            else
+            {
+                Console.WriteLine("Lo siento, no has sido seleccionada como la princesa.");
+            }
+
+            MostrarAtributosPrincipe();
+            LimpiarDatos();
         }
 
         private double CalcularCompatibilidad(Personaje personaje)
