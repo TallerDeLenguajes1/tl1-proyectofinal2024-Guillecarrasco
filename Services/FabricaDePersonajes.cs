@@ -1,8 +1,6 @@
 using ProyectoJuegoDeRol.Models;
 using ProyectoJuegoDeRol.Utils;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace ProyectoJuegoDeRol.Services
 {
@@ -13,17 +11,28 @@ namespace ProyectoJuegoDeRol.Services
         public async Task<Personaje> CrearPersonajeAleatorioAsync()
         {
             var hobbies = Enum.GetValues(typeof(Hobbie)).Cast<Hobbie>().ToArray();
-            var Provincias = Enum.GetValues(typeof(Provincia)).Cast<Provincia>().ToArray();
+            var provincias = Enum.GetValues(typeof(Provincia)).Cast<Provincia>().ToArray();
             string nombre = await GeneradorDeNombres.GenerarNombreAsync();
 
-            return new Personaje
+             return new Personaje
             {
-                Nombre = nombre,
-                Provincia = Provincias[random.Next(Provincias.Length)],
-                Inteligencia = random.Next(1, 11),
-                Atractivo = random.Next(1, 11),
-                Carisma = random.Next(1, 11),
-                Hobbie = hobbies[random.Next(hobbies.Length)]
+                Datos = new Datos
+                {
+                    Nombre = nombre,
+                    Edad = random.Next(18, 60),
+                    Provincia = provincias[random.Next(provincias.Length)]
+                },
+                Caracteristicas = new Caracteristicas
+                {
+                    Inteligencia = random.Next(1, 11),
+                    Atractivo = random.Next(1, 11),
+                    Carisma = random.Next(1, 11),
+                    Hobbie = hobbies[random.Next(hobbies.Length)]
+                },
+                Compatibilidad = new Compatibilidad
+                {
+                    CompatibilidadValor = random.NextDouble()
+                }
             };
         }
         public Principe CrearPrincipe()
@@ -31,11 +40,19 @@ namespace ProyectoJuegoDeRol.Services
             var hobbies = Enum.GetValues(typeof(Hobbie)).Cast<Hobbie>().ToArray();
             return new Principe
             {
-                Nombre = "Príncipe",
-                Inteligencia = random.Next(1, 11),
-                Atractivo = random.Next(1, 11),
-                Carisma = random.Next(1, 11),
-                Hobbie = hobbies[random.Next(0,hobbies.Length)]
+                Datos = new Datos
+                {
+                    Nombre = "Príncipe",
+                    Edad = random.Next(20, 50),
+                    Provincia = Provincia.CiudadAutónomadeBuenosAires 
+                },
+                Caracteristicas = new Caracteristicas
+                {
+                    Inteligencia = random.Next(1, 11),
+                    Atractivo = random.Next(1, 11),
+                    Carisma = random.Next(1, 11),
+                    Hobbie = hobbies[random.Next(hobbies.Length)]
+                }
             };
         }
     }
