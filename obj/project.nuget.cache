@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wnnlAUgND/o=",
+  "dgSpecHash": "qsmlvJ4NQY8=",
   "success": true,
   "projectFilePath": "C:\\Users\\pc\\Desktop\\tallerLenguajes\\tl1-proyectofinal2024-Guillecarrasco\\tl1-proyectofinal2024-Guillecarrasco.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\pc\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }

@@ -5,7 +5,7 @@ namespace ProyectoJuegoDeRol.Models
         Tucumán,
         SanLuis,
         SanJuan,
-        CiudadAutónomadeBuenosAires,
+        CiudadAutonomadeBuenosAires,
         BuenosAires,
         EntreRios,
         Corrientes,

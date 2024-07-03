@@ -44,7 +44,7 @@ namespace ProyectoJuegoDeRol.Services
                 {
                     Nombre = "Príncipe",
                     Edad = random.Next(20, 50),
-                    Provincia = Provincia.CiudadAutónomadeBuenosAires 
+                    Provincia = Provincia.CiudadAutonomadeBuenosAires 
                 },
                 Caracteristicas = new Caracteristicas
                 {
