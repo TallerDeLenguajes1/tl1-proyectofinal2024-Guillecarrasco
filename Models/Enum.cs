@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 namespace ProyectoJuegoDeRol.Models
 {
-    public enum Provincia{
+    public enum Provincia
+    {
         Tucumán,
         SanLuis,
         SanJuan,
@@ -25,14 +25,14 @@ namespace ProyectoJuegoDeRol.Models
         Chubut,
         Lapampa,
         SantiagodelEstero
-        }
-    
-    public enum Hobbie{
+    }
+
+    public enum Hobbie
+    {
         Deporte,
         Fotografía,
         Cine,
         Ajedrez,
         Leer
-        }
+    }
 }
-
