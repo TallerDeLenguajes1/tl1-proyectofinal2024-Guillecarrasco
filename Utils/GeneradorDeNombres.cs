@@ -20,11 +20,13 @@ namespace ProyectoJuegoDeRol.Utils
                 response.EnsureSuccessStatusCode();  
 
 
-                string nombre = await response.Content.ReadAsStringAsync();
+                string nombreSucio = await response.Content.ReadAsStringAsync();
 
-                if (!string.IsNullOrWhiteSpace(nombre))
+                string nombreLimpio = LimpiarNombre(nombreSucio);
+                
+                if (!string.IsNullOrWhiteSpace(nombreLimpio))
                 {
-                    return nombre;
+                    return nombreLimpio;
                 }
                 else
                 {
@@ -43,5 +45,13 @@ namespace ProyectoJuegoDeRol.Utils
                 return "NombreDesconocido";
             }
         }
+
+        public static string LimpiarNombre(string nombreSucio)
+        {
+            string nombreLimpio = Regex.Replace(nombreSucio, "<.*?>", string.Empty);
+            nombreLimpio = nombreLimpio.Trim();
+            return nombreLimpio;
+        }
+
     }
 }
