@@ -24,6 +24,7 @@ namespace ProyectoJuegoDeRol.Services
             personajes = new List<Personaje>();
             personajesJson = new PersonajesJson();
             historialJson = new HistorialJson();    
+            historial = new List<string>();
             compatibilidadAnterior = new Dictionary<Personaje, double>();     
         }
 
@@ -163,6 +164,108 @@ namespace ProyectoJuegoDeRol.Services
         }
 
 
+}
+
+private void RealizarAccionesSemanales()
+{
+    int accionesRealizadas = 0;
+    while (accionesRealizadas < 3)
+    {
+        Console.Clear();
+        MostrarBarraSuperior(personajePrincipal);
+
+        Console.WriteLine("\nSeleccione una acción para realizar:");
+
+        string[] opciones = {
+            "Subir inteligencia", "Bajar inteligencia",
+            "Subir atractivo", "Bajar atractivo", "Subir carisma",
+            "Bajar carisma", "Elegir hobbie de la semana"
+        };
+
+        string[] botones = opciones.Select(o => $"⋆˖⁺‧₊☽ {o} ☾₊‧⁺˖⋆").ToArray();
+
+        int selectedOption = 0;
+
+        while (true)
+        {
+            Console.Clear();
+            MostrarBarraSuperior(personajePrincipal);
+            Console.WriteLine("\nSeleccione una acción para realizar:");
+
+            int consoleWidth = Console.WindowWidth;
+            int consoleHeight = Console.WindowHeight;
+            int botonesHeight = botones.Length + botones.Length; // Número de opciones más una línea en blanco entre cada opción
+            int verticalPadding = (consoleHeight - (botonesHeight + 1)) / 2;
+
+            // Imprimir espacios verticales para centrar
+            for (int i = 0; i < verticalPadding; i++)
+            {
+                Console.WriteLine();
+            }
+            string marco1 = "╔══════ ❀•°❀°•❀ ══════╗";
+             int padding2 = (consoleWidth - marco1.Length) / 2;
+            Console.WriteLine(new string(' ', padding2) + marco1);
+            for (int i = 0; i < botones.Length; i++)
+            {
+                string boton = botones[i];
+                int padding = (consoleWidth - boton.Length) / 2;
+
+                if (i == selectedOption)
+                {
+                    Console.BackgroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                }
+
+                Console.WriteLine(new string(' ', padding) + boton);
+
+                Console.ResetColor();
+                Console.WriteLine(); // Espacio entre botones
+            }
+            string marco2 = "╚══════ ❀•°❀°•❀ ══════╝";
+             int padding3 = (consoleWidth - marco2.Length) / 2;
+            Console.WriteLine(new string(' ', padding3) + marco2);
+
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+            if (keyInfo.Key == ConsoleKey.UpArrow)
+            {
+                selectedOption = (selectedOption == 0) ? botones.Length - 1 : selectedOption - 1;
+            }
+            else if (keyInfo.Key == ConsoleKey.DownArrow)
+            {
+                selectedOption = (selectedOption == botones.Length - 1) ? 0 : selectedOption + 1;
+            }
+            else if (keyInfo.Key == ConsoleKey.Enter)
+            {
+                break;
+            }
+        }
+
+        int accion = selectedOption + 1;
+
+        if (accion >= 1 && accion <= 7)
+        {
+            if (accion == 7)
+            {
+                ElegirHobbie(personajePrincipal);
+                historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Nombre} eligió un nuevo hobbie.");
+                accionesRealizadas++;
+            }
+            else
+            {
+                bool accionValida = GeneradorDeAtributos.RealizarAccion(personajePrincipal, accion);
+                if (accionValida)
+                {
+                    historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Nombre} realizó acción {accion}.");
+                    accionesRealizadas++;
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("Entrada no válida. Por favor, ingrese un número entre 1 y 7.");
+        }
+    }
 }
 
 
