@@ -90,8 +90,9 @@ namespace ProyectoJuegoDeRol.Services
         {
             int semana = 1;
             bool eliminado = false;
+            bool ganadorPrematuro = false;
 
-            while (personajes.Count > 3 && !eliminado)
+            while (personajes.Count > 3 && !eliminado && !ganadorPrematuro)
             {
                 Console.Clear();
                 Console.WriteLine($"\nSemana {semana}:");
@@ -103,36 +104,33 @@ namespace ProyectoJuegoDeRol.Services
                     RealizarAccionesAleatorias(personaje);
                 }
 
-                Console.Clear();
-                Console.WriteLine("\nCompatibilidad con el príncipe:");
-                foreach (var personaje in personajes)
-                {
-                    double compatibilidadActual = CalcularCompatibilidad(personaje);
-                    double cambioCompatibilidad = compatibilidadActual - compatibilidadAnterior[personaje];
-                    Console.WriteLine($"{personaje.Datos.Nombre}: {compatibilidadActual:F2}% (Cambio: {cambioCompatibilidad:F2}%)");
-                    compatibilidadAnterior[personaje] = compatibilidadActual;
-                }
+                MostrarCompatibilidadConPrincipe();       
 
                 double compatibilidadPrincipalActual = CalcularCompatibilidad(personajePrincipal);
                 double cambioCompatibilidadPrincipal = compatibilidadPrincipalActual - compatibilidadAnterior[personajePrincipal];
                 Console.WriteLine($"Tu personaje: {compatibilidadPrincipalActual:F2}% (Cambio: {cambioCompatibilidadPrincipal:F2}%)");
                 compatibilidadAnterior[personajePrincipal] = compatibilidadPrincipalActual;
 
-                eliminado = EliminarPersonajesConMenorCompatibilidad(personajePrincipal);
+                if (compatibilidadPrincipalActual >= 100.0)
+                {
+                    ganadorPrematuro = true;
+                    Console.WriteLine("¡El príncipe no podía quitar los ojos de ti y terminó el concurso antes de tiempo para casarse contigo! Ahora eres la princesa.");
+                }
+                else
+                {
 
-                historial.Add($"Semana {semana}: {personajePrincipal.Datos.Nombre} realizó acciones.");
-                historialJson.GuardarHistorial(historial, "Data/historial.json");
-
-                semana++;
-                Console.WriteLine("Presiona cualquier tecla para continuar...");
-                Console.ReadKey();
+                    eliminado = EliminarPersonajesConMenorCompatibilidad(personajePrincipal);
+                    semana++;
+                    Console.WriteLine("Presiona cualquier tecla para continuar...");
+                    Console.ReadKey();
+                }
             }
 
-            if (!eliminado && EsGanador(personajePrincipal))
+            if (!eliminado && EsGanador(personajePrincipal) && !ganadorPrematuro)
             {
                 Console.WriteLine("¡Felicidades! Has sido seleccionada como la princesa.");
             }
-            else
+            else if(eliminado && !ganadorPrematuro)
             {
                 Console.WriteLine("Lo siento, no has sido seleccionada como la princesa.");
             }
@@ -140,6 +138,20 @@ namespace ProyectoJuegoDeRol.Services
             MostrarAtributosPrincipe();
             LimpiarDatos();
         }
+
+        private void MostrarCompatibilidadConPrincipe()
+        {
+            Console.Clear();
+            Console.WriteLine("\nCompatibilidad con el príncipe:");
+            foreach (var personaje in personajes)
+            {
+                double compatibilidadActual = CalcularCompatibilidad(personaje);
+                double cambioCompatibilidad = compatibilidadActual - compatibilidadAnterior[personaje];
+                Console.WriteLine($"{personaje.Datos.Nombre}: {compatibilidadActual:F2}% (Cambio: {cambioCompatibilidad:F2}%)");
+                compatibilidadAnterior[personaje] = compatibilidadActual;
+            }
+        }
+
 
         private double CalcularCompatibilidad(Personaje personaje)
         {
@@ -202,21 +214,21 @@ namespace ProyectoJuegoDeRol.Services
 
                 int accion = seleccion + 1;
 
-                if (accion == 7)
+                bool accionValida = GeneradorDeAtributos.RealizarAccion(personajePrincipal, accion, true);
+                if (accionValida)
                 {
-                    ElegirHobbie(personajePrincipal);
-                    historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Datos.Nombre} eligió un nuevo hobbie.");
-                }
-                else
-                {
-                    bool accionValida = GeneradorDeAtributos.RealizarAccion(personajePrincipal, accion, true);
-                    if (accionValida)
+                    string descripcionAccion;
+                    if (accion == 7)
                     {
-                        historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Datos.Nombre} realizó acción {accion}.");
+                        descripcionAccion = $"eligió un nuevo hobbie: {personajePrincipal.Caracteristicas.Hobbie}.";
                     }
+                    else
+                    {
+                        descripcionAccion = $"realizó acción {accion}.";
+                    }
+                    historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Datos.Nombre} {descripcionAccion}");
+                    accionesRealizadas++;
                 }
-
-                accionesRealizadas++;
             }
         }
 
