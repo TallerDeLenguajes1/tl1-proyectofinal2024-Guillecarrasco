@@ -80,21 +80,21 @@ namespace ProyectoJuegoDeRol.Services
             ██                                                                                                                   
             ";
             Console.Clear();
-            CenterText(title);
-            CenterText("Toque cualquier tecla para empezar", 8);
+            CentrarTexto(title);
+            CentrarTexto("Toque cualquier tecla para empezar", 8);
             Console.SetCursorPosition((Console.WindowWidth / 2) - 1, Console.CursorTop + 2);
             Console.ReadKey();
         }
         
-        private void CenterText(string text, int offsetLines = 0)
+        private void CentrarTexto(string texto, int centroHaciaAbajo = 0)
         {
-            string[] lines = text.Split('\n');
-            int top = (Console.WindowHeight - lines.Length) / 2 + offsetLines;
-            foreach (var line in lines)
+            string[] lineas = texto.Split('\n');
+            int top = (Console.WindowHeight - lineas.Length) / 2 + centroHaciaAbajo;
+            foreach (var linea in lineas)
             {
-                int left = (Console.WindowWidth - line.Length) / 2;
+                int left = (Console.WindowWidth - linea.Length) / 2;
                 Console.SetCursorPosition(left, top++);
-                Console.WriteLine(line);
+                Console.WriteLine(linea);
             }
         }
 
@@ -145,6 +145,7 @@ namespace ProyectoJuegoDeRol.Services
 
                 if (compatibilidadPrincipalActual >= 100.0)
                 {
+                    Console.Clear();
                     ganadorPrematuro = true;
                     Console.WriteLine("¡El príncipe no podía quitar los ojos de ti y terminó el concurso antes de tiempo para casarse contigo! Ahora eres la princesa.");
                 }
@@ -160,10 +161,12 @@ namespace ProyectoJuegoDeRol.Services
 
             if (!eliminado && EsGanador(personajePrincipal) && !ganadorPrematuro)
             {
+                Console.Clear();
                 Console.WriteLine("¡Felicidades! Has sido seleccionada como la princesa.");
             }
             else if(eliminado && !ganadorPrematuro)
             {
+                Console.Clear();
                 Console.WriteLine("Lo siento, no has sido seleccionada como la princesa.");
             }
 
@@ -174,12 +177,18 @@ namespace ProyectoJuegoDeRol.Services
         private void MostrarCompatibilidadConPrincipe()
         {
             Console.Clear();
-            Console.WriteLine("\nCompatibilidad con el príncipe:");
+            string titulo = "Compatibilidad con el príncipe:";
+            int consolaAncho = Console.WindowWidth;
+            int paddingTitulo = (consolaAncho - titulo.Length) / 2;
+            Console.WriteLine(new string(' ', paddingTitulo) + titulo);
+            Console.WriteLine();
             foreach (var personaje in personajes)
             {
                 double compatibilidadActual = CalcularCompatibilidad(personaje);
                 double cambioCompatibilidad = compatibilidadActual - compatibilidadAnterior[personaje];
-                Console.WriteLine($"{personaje.Datos.Nombre}: {compatibilidadActual:F2}% (Cambio: {cambioCompatibilidad:F2}%)");
+                string textoCompatibilidad = $"{personaje.Datos.Nombre}: {compatibilidadActual:F2}% (Cambio: {cambioCompatibilidad:F2}%)";
+                int paddingCompatibilidad = (consolaAncho - textoCompatibilidad.Length) / 2;
+                Console.WriteLine(new string(' ', paddingCompatibilidad) + textoCompatibilidad);
                 compatibilidadAnterior[personaje] = compatibilidadActual;
             }
         }
@@ -244,6 +253,7 @@ namespace ProyectoJuegoDeRol.Services
                     if (accion == 7)
                     {
                         descripcionAccion = $"eligió un nuevo hobbie: {personajePrincipal.Caracteristicas.Hobbie}.";
+                        ElegirHobbie(personajePrincipal);
                     }
                     else
                     {
@@ -264,7 +274,7 @@ namespace ProyectoJuegoDeRol.Services
                 if(Barra){
                     MostrarBarraSuperior(personajePrincipal);
                 }
-                Console.WriteLine("\nSeleccione una opción:");
+                
 
                 int anchoConsola = Console.WindowWidth;
                 int alturaConsola = Console.WindowHeight;
@@ -275,11 +285,11 @@ namespace ProyectoJuegoDeRol.Services
                 {
                     Console.WriteLine();
                 }
-
+                
                 string marco1 = "╔══════ ❀•°❀°•❀ ══════╗";
                 int padding2 = (anchoConsola - marco1.Length) / 2;
                 Console.WriteLine(new string(' ', padding2) + marco1);
-
+                Console.WriteLine("\nSeleccione una opción:");
                 for (int i = 0; i < opciones.Length; i++)
                 {
                     string opcion = opciones[i];
