@@ -12,14 +12,14 @@ namespace ProyectoJuegoDeRol.Services
         {
             var hobbies = Enum.GetValues(typeof(Hobbie)).Cast<Hobbie>().ToArray();
             var provincias = Enum.GetValues(typeof(Provincia)).Cast<Provincia>().ToArray();
-            string nombre = await GeneradorDeNombres.GenerarNombreAsync();
+            string nombre = await GeneradorDeNombres.GenerarNombreAsync(false);
 
              return new Personaje
             {
                 Datos = new Datos
                 {
                     Nombre = nombre,
-                    Edad = random.Next(18, 60),
+                    Edad = random.Next(18, 30),
                     Provincia = provincias[random.Next(provincias.Length)]
                 },
                 Caracteristicas = new Caracteristicas
@@ -35,15 +35,16 @@ namespace ProyectoJuegoDeRol.Services
                 }
             };
         }
-        public Principe CrearPrincipe()
+        public async Task<Princesa> CrearPrincesa()
         {
             var hobbies = Enum.GetValues(typeof(Hobbie)).Cast<Hobbie>().ToArray();
-            return new Principe
+            string nombre = await GeneradorDeNombres.GenerarNombreAsync(true);
+            return new Princesa
             {
                 Datos = new Datos
                 {
-                    Nombre = "Príncipe",
-                    Edad = random.Next(20, 50),
+                    Nombre = "Princesa" + nombre,
+                    Edad = random.Next(20, 35),
                     Provincia = Provincia.CiudadAutonomadeBuenosAires 
                 },
                 Caracteristicas = new Caracteristicas

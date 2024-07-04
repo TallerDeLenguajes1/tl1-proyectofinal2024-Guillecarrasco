@@ -13,7 +13,7 @@ namespace ProyectoJuegoDeRol.Services
         private List<Personaje> personajes;
         private FabricaDePersonajes fabrica;
         private Personaje personajePrincipal;
-        private Principe principe;
+        private Princesa princesa;
         private PersonajesJson personajesJson;
         private HistorialJson historialJson;
         private List<string> historial;
@@ -46,7 +46,7 @@ namespace ProyectoJuegoDeRol.Services
                 personajesJson.GuardarPersonajes(personajes, "Data/personajes.json");
             }
             
-            principe = fabrica.CrearPrincipe();
+            princesa = await fabrica.CrearPrincesa();
 
             foreach (var personaje in personajes)
             {
@@ -251,9 +251,9 @@ namespace ProyectoJuegoDeRol.Services
         private double CalcularCompatibilidad(Personaje personaje)
         {
             double maxDiferencia = 10;
-            double diferenciaInteligencia = Math.Abs(personaje.Caracteristicas.Inteligencia - principe.Caracteristicas.Inteligencia);
-            double diferenciaAtractivo = Math.Abs(personaje.Caracteristicas.Atractivo - principe.Caracteristicas.Atractivo);
-            double diferenciaCarisma = Math.Abs(personaje.Caracteristicas.Carisma - principe.Caracteristicas.Carisma);
+            double diferenciaInteligencia = Math.Abs(personaje.Caracteristicas.Inteligencia - princesa.Caracteristicas.Inteligencia);
+            double diferenciaAtractivo = Math.Abs(personaje.Caracteristicas.Atractivo - princesa.Caracteristicas.Atractivo);
+            double diferenciaCarisma = Math.Abs(personaje.Caracteristicas.Carisma - princesa.Caracteristicas.Carisma);
 
             double compatibilidadInteligencia = (maxDiferencia - diferenciaInteligencia) / maxDiferencia;
             double compatibilidadAtractivo = (maxDiferencia - diferenciaAtractivo) / maxDiferencia;
@@ -261,7 +261,7 @@ namespace ProyectoJuegoDeRol.Services
 
             double compatibilidadTotal = (compatibilidadInteligencia + compatibilidadAtractivo + compatibilidadCarisma) / 4.0;
 
-            if (personaje.Caracteristicas.Hobbie == principe.Caracteristicas.Hobbie)
+            if (personaje.Caracteristicas.Hobbie == princesa.Caracteristicas.Hobbie)
             {
                 compatibilidadTotal += 0.25;
             }
@@ -443,13 +443,13 @@ namespace ProyectoJuegoDeRol.Services
 
         private bool EsGanador(Personaje personaje)
         {
-            var diferenciaPrincipal = Math.Abs(personaje.Caracteristicas.Inteligencia - principe.Caracteristicas.Inteligencia) +
-                                      Math.Abs(personaje.Caracteristicas.Atractivo - principe.Caracteristicas.Atractivo) +
-                                      Math.Abs(personaje.Caracteristicas.Carisma - principe.Caracteristicas.Carisma);
+            var diferenciaPrincipal = Math.Abs(personaje.Caracteristicas.Inteligencia - princesa.Caracteristicas.Inteligencia) +
+                                      Math.Abs(personaje.Caracteristicas.Atractivo - princesa.Caracteristicas.Atractivo) +
+                                      Math.Abs(personaje.Caracteristicas.Carisma - princesa.Caracteristicas.Carisma);
 
-            var diferenciasRestantes = personajes.Select(p => Math.Abs(p.Caracteristicas.Inteligencia - principe.Caracteristicas.Inteligencia) +
-                                                              Math.Abs(p.Caracteristicas.Atractivo - principe.Caracteristicas.Atractivo) +
-                                                              Math.Abs(p.Caracteristicas.Carisma - principe.Caracteristicas.Carisma)).ToList();
+            var diferenciasRestantes = personajes.Select(p => Math.Abs(p.Caracteristicas.Inteligencia - princesa.Caracteristicas.Inteligencia) +
+                                                              Math.Abs(p.Caracteristicas.Atractivo - princesa.Caracteristicas.Atractivo) +
+                                                              Math.Abs(p.Caracteristicas.Carisma - princesa.Caracteristicas.Carisma)).ToList();
 
             return diferenciaPrincipal <= diferenciasRestantes.Min();
         }
@@ -464,11 +464,12 @@ namespace ProyectoJuegoDeRol.Services
 
         private void MostrarAtributosPrincipe()
         {
-            CentrarTexto(@$"Atributos del Príncipe:
-            Inteligencia: {principe.Caracteristicas.Inteligencia}
-            Atractivo: {principe.Caracteristicas.Atractivo}
-            Carisma: {principe.Caracteristicas.Carisma}
-            Hobbie: {principe.Caracteristicas.Hobbie}
+            CentrarTexto(
+            @$"Atributos del Príncipe:
+            Inteligencia: {princesa.Caracteristicas.Inteligencia}
+            Atractivo: {princesa.Caracteristicas.Atractivo}
+            Carisma: {princesa.Caracteristicas.Carisma}
+            Hobbie: {princesa.Caracteristicas.Hobbie}
             Presiona cualquier tecla para volver al menú...
             ");
             Console.ReadKey();

@@ -9,10 +9,12 @@ namespace ProyectoJuegoDeRol.Utils
     {
         private static readonly HttpClient httpClient = new HttpClient();
 
-        public static async Task<string> GenerarNombreAsync()
+        public static async Task<string> GenerarNombreAsync(bool gender)
         {
-            string apiUrl = "https://namey.muffinlabs.com/name.string?type=female&with_surname=true&frequency=all";
-
+            string apiUrl = gender
+            ? "https://namey.muffinlabs.com/name.string?type=female&with_surname=true&frequency=all"
+            : "https://namey.muffinlabs.com/name.string?type=male&with_surname=true&frequency=all";
+            
             try
             {
 
