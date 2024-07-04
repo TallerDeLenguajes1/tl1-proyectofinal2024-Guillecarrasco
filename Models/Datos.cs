@@ -6,9 +6,5 @@ namespace ProyectoJuegoDeRol.Models
         public int Edad { get; set; }
         public Provincia Provincia { get; set; }
 
-        public void MostrarDatos()
-        {
-            Console.WriteLine($"Nombre: {Nombre}, Edad: {Edad}, Provincia: {Provincia}");
-        }
     }
 }

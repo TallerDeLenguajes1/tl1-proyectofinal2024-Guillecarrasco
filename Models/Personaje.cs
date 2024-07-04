@@ -5,12 +5,5 @@ namespace ProyectoJuegoDeRol.Models
         public Datos Datos { get; set; } = new Datos();
         public Caracteristicas Caracteristicas { get; set; } = new Caracteristicas();
         public Compatibilidad Compatibilidad { get; set; } = new Compatibilidad();
-
-        public void MostrarAtributos()
-        {
-            Datos.MostrarDatos();
-            Caracteristicas.MostrarCaracteristicas();
-            Compatibilidad.MostrarCompatibilidad();
-        }
     }
 }

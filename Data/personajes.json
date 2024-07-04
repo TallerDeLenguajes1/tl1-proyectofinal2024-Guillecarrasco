@@ -1,0 +1,322 @@
+[
+  {
+    "Datos": {
+      "Nombre": "Carroll Cogen",
+      "Edad": 24,
+      "Provincia": "Catamarca"
+    },
+    "Caracteristicas": {
+      "Carisma": 1,
+      "Inteligencia": 6,
+      "Atractivo": 9,
+      "Hobbie": "Videojuegos"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.9854664955555062
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Felipe Burdick",
+      "Edad": 18,
+      "Provincia": "Salta"
+    },
+    "Caracteristicas": {
+      "Carisma": 3,
+      "Inteligencia": 1,
+      "Atractivo": 5,
+      "Hobbie": "Videojuegos"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.3781776096154862
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Darell Notarnicola",
+      "Edad": 19,
+      "Provincia": "BuenosAires"
+    },
+    "Caracteristicas": {
+      "Carisma": 8,
+      "Inteligencia": 7,
+      "Atractivo": 5,
+      "Hobbie": "Videojuegos"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.7231702365033219
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Damien Cronshaw",
+      "Edad": 28,
+      "Provincia": "Neuquen"
+    },
+    "Caracteristicas": {
+      "Carisma": 6,
+      "Inteligencia": 6,
+      "Atractivo": 5,
+      "Hobbie": "Fotografia"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.035568508790010056
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Maynard Stasser",
+      "Edad": 25,
+      "Provincia": "RioNegro"
+    },
+    "Caracteristicas": {
+      "Carisma": 10,
+      "Inteligencia": 9,
+      "Atractivo": 3,
+      "Hobbie": "Deporte"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.14054686977182163
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Hilton Bacak",
+      "Edad": 26,
+      "Provincia": "Cordoba"
+    },
+    "Caracteristicas": {
+      "Carisma": 9,
+      "Inteligencia": 7,
+      "Atractivo": 8,
+      "Hobbie": "Videojuegos"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.03188759627073057
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Sung Larrow",
+      "Edad": 24,
+      "Provincia": "Mendoza"
+    },
+    "Caracteristicas": {
+      "Carisma": 2,
+      "Inteligencia": 3,
+      "Atractivo": 9,
+      "Hobbie": "Videojuegos"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.6213150152861902
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Parker Greenlaw",
+      "Edad": 26,
+      "Provincia": "SanJuan"
+    },
+    "Caracteristicas": {
+      "Carisma": 9,
+      "Inteligencia": 6,
+      "Atractivo": 7,
+      "Hobbie": "Videojuegos"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.6998273644596301
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Ignacio Tocchio",
+      "Edad": 21,
+      "Provincia": "EntreRios"
+    },
+    "Caracteristicas": {
+      "Carisma": 6,
+      "Inteligencia": 3,
+      "Atractivo": 8,
+      "Hobbie": "Deporte"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.1272876424934436
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Rolland Provencher",
+      "Edad": 18,
+      "Provincia": "Chubut"
+    },
+    "Caracteristicas": {
+      "Carisma": 7,
+      "Inteligencia": 7,
+      "Atractivo": 7,
+      "Hobbie": "Fotografia"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.4884746783889048
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Russel Lieberg",
+      "Edad": 24,
+      "Provincia": "SanLuis"
+    },
+    "Caracteristicas": {
+      "Carisma": 8,
+      "Inteligencia": 6,
+      "Atractivo": 2,
+      "Hobbie": "Fotografia"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.04080353176921503
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Jamar Bleininger",
+      "Edad": 28,
+      "Provincia": "SanLuis"
+    },
+    "Caracteristicas": {
+      "Carisma": 6,
+      "Inteligencia": 7,
+      "Atractivo": 2,
+      "Hobbie": "Cine"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.9061853725072213
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Fabian Mooney",
+      "Edad": 24,
+      "Provincia": "Mendoza"
+    },
+    "Caracteristicas": {
+      "Carisma": 8,
+      "Inteligencia": 3,
+      "Atractivo": 10,
+      "Hobbie": "Cine"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.7486166942410118
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Keven Wank",
+      "Edad": 23,
+      "Provincia": "Lapampa"
+    },
+    "Caracteristicas": {
+      "Carisma": 2,
+      "Inteligencia": 7,
+      "Atractivo": 4,
+      "Hobbie": "Videojuegos"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.7780746352674666
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Mark Tews",
+      "Edad": 26,
+      "Provincia": "Santafe"
+    },
+    "Caracteristicas": {
+      "Carisma": 5,
+      "Inteligencia": 8,
+      "Atractivo": 7,
+      "Hobbie": "Deporte"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.5675837591367976
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Mike Avants",
+      "Edad": 25,
+      "Provincia": "Lapampa"
+    },
+    "Caracteristicas": {
+      "Carisma": 9,
+      "Inteligencia": 2,
+      "Atractivo": 1,
+      "Hobbie": "Videojuegos"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.6305243014866194
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Marvin Witkus",
+      "Edad": 25,
+      "Provincia": "BuenosAires"
+    },
+    "Caracteristicas": {
+      "Carisma": 5,
+      "Inteligencia": 3,
+      "Atractivo": 2,
+      "Hobbie": "Videojuegos"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.23679185848848994
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Percy Stremlow",
+      "Edad": 24,
+      "Provincia": "Neuquen"
+    },
+    "Caracteristicas": {
+      "Carisma": 1,
+      "Inteligencia": 1,
+      "Atractivo": 7,
+      "Hobbie": "Deporte"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.5333796792203537
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Eric Wernert",
+      "Edad": 24,
+      "Provincia": "Mendoza"
+    },
+    "Caracteristicas": {
+      "Carisma": 8,
+      "Inteligencia": 10,
+      "Atractivo": 5,
+      "Hobbie": "Ajedrez"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.7071266536602608
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Christopher Muni",
+      "Edad": 21,
+      "Provincia": "Chaco"
+    },
+    "Caracteristicas": {
+      "Carisma": 2,
+      "Inteligencia": 7,
+      "Atractivo": 3,
+      "Hobbie": "Ajedrez"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.6822767036012996
+    }
+  }
+]

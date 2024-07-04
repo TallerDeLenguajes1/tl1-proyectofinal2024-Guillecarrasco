@@ -4,9 +4,5 @@ namespace ProyectoJuegoDeRol.Models
     {
         public double CompatibilidadValor { get; set; }
 
-        public void MostrarCompatibilidad()
-        {
-            Console.WriteLine($"Compatibilidad: {CompatibilidadValor}");
-        }
     }
 }

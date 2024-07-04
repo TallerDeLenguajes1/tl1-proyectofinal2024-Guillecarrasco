@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Drawing;
+using ConsoleColorful = Colorful.Console;
 
 namespace ProyectoJuegoDeRol.Services
 {
@@ -67,7 +69,7 @@ namespace ProyectoJuegoDeRol.Services
     
         private void MostrarPantallaInicial()
         {
-            string title = @"
+            string titulo = @"
                 █████ █                                       ███                                                                
             ██████  █                                         ███                                   █          █                 
             ██   █  █                                           ██                                  ███        ██                  
@@ -87,7 +89,7 @@ namespace ProyectoJuegoDeRol.Services
             ██                                                                                                                   
             ";
             Console.Clear();
-            CentrarTexto(title);
+            ColoresTitulo(titulo);
             CentrarTexto("Toque cualquier tecla para empezar", 8);
             Console.SetCursorPosition((Console.WindowWidth / 2) - 1, Console.CursorTop + 2);
             Console.ReadKey();
@@ -105,6 +107,33 @@ namespace ProyectoJuegoDeRol.Services
             }
         }
 
+        private static void ColoresTitulo(string text)
+        {
+            Color[] colors = { Color.MediumPurple, Color.Pink, Color.LightPink, Color.LightBlue, Color.LightCoral };
+            string[] lines = text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+            foreach (string line in lines)
+            {
+                int espacios = (Console.WindowWidth - line.Length) / 2;
+                Console.Write(new string(' ', espacios));
+
+                int colorIndex = 0;
+                foreach (char c in line)
+                {
+                    if (c == ' ')
+                    {
+                        Console.Write(c);
+                    }
+                    else
+                    {
+                        ConsoleColorful.Write(c.ToString(), colors[colorIndex % colors.Length]);
+                        colorIndex++;
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+
         private void MostrarVideoIntro()
         {
             Console.WriteLine("Mostrando video de introducción...");
@@ -115,7 +144,10 @@ namespace ProyectoJuegoDeRol.Services
         {
             Console.Clear();
             string[] opcionesPersonajes = personajes.Select(p => $"{p.Datos.Nombre} de {p.Datos.Provincia} (Edad: {p.Datos.Edad})").ToArray();
-            Console.WriteLine("Seleccione el personaje que quiera ser:");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            CentrarTexto("Seleccione el personaje que quiera ser:", -8);
+            Console.ReadKey();
+            Console.ResetColor();
             int seleccion = MostrarOpcionesYObtenerSeleccion(opcionesPersonajes, false);
             personajePrincipal = personajes[seleccion];
             personajes.RemoveAt(seleccion);
@@ -134,7 +166,9 @@ namespace ProyectoJuegoDeRol.Services
             while (personajes.Count > 3 && !eliminado && !ganadorPrematuro)
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine($"\nSemana {semana}:");
+                Console.ResetColor();
 
                 RealizarAccionesSemanales();
 
@@ -143,50 +177,84 @@ namespace ProyectoJuegoDeRol.Services
                     RealizarAccionesAleatorias(personaje);
                 }
 
-                MostrarCompatibilidadConPrincipe();       
+                MostrarCompatibilidadConPrincipe();
 
                 double compatibilidadPrincipalActual = CalcularCompatibilidad(personajePrincipal);
-                double cambioCompatibilidadPrincipal = compatibilidadPrincipalActual - compatibilidadAnterior[personajePrincipal];
-                CentrarTexto($"Tu personaje: {compatibilidadPrincipalActual:F2}% (Cambio: {cambioCompatibilidadPrincipal:F2}%)", 10);
+                double cambioCompatibilidadPrincipal = compatibilidadPrincipalActual - (compatibilidadAnterior.ContainsKey(personajePrincipal) ? compatibilidadAnterior[personajePrincipal] : 0);
+                string textoPrincipal = $"Tu personaje: {compatibilidadPrincipalActual:F2}% (Cambio: {cambioCompatibilidadPrincipal:F2}%)";
+
+                ConsoleColor colorTextoPrincipal;
+
+                if (cambioCompatibilidadPrincipal > 0)
+                {
+                    colorTextoPrincipal = ConsoleColor.Green;
+                }
+                else if (cambioCompatibilidadPrincipal < 0)
+                {
+                    colorTextoPrincipal = ConsoleColor.Red;
+                }
+                else
+                {
+                    colorTextoPrincipal = ConsoleColor.White;
+                }
+
+                Console.ForegroundColor = colorTextoPrincipal;
+                CentrarTexto(textoPrincipal, 10); 
+                Console.ResetColor();
+
                 compatibilidadAnterior[personajePrincipal] = compatibilidadPrincipalActual;
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 CentrarTexto("Presiona cualquier tecla para continuar...", 13);
+                Console.ResetColor();
+
                 Console.ReadKey();
                 if (compatibilidadPrincipalActual >= 100.0)
                 {
                     Console.Clear();
                     ganadorPrematuro = true;
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine($"¡La {princesa.Datos.Nombre} no podía quitar los ojos de ti y terminó el concurso antes de tiempo para casarse contigo! Ahora eres la princesa.");
+                    Console.ResetColor();
                 }
                 else
                 {
                     Console.Clear();
                     eliminado = EliminarPersonajesConMenorCompatibilidad(personajePrincipal);
                     semana++;
-                    CentrarTexto("Presiona cualquier tecla para continuar...", 6);
-                    Console.ReadKey();
-                }
-            }
 
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    CentrarTexto("Presiona cualquier tecla para continuar...", 6);
+        
+                }               
+            }
             if (!eliminado && EsGanador(personajePrincipal) && !ganadorPrematuro)
             {
                 Console.Clear();               
-                string mensajeFinal=$"¡Felicidades! La {princesa.Datos.Nombre} te ha seleccionado como su nuevo esposo, ahora eres príncipe.";
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                string mensajeFinal = $"¡Felicidades! La {princesa.Datos.Nombre} te ha seleccionado como su nuevo esposo, ahora eres príncipe.";
                 CentrarTexto(mensajeFinal);
+                Console.ResetColor();
             }
             else
             {
                 Console.Clear();
-                string mensajeFinal=$"Lo siento, no has sido seleccionado por la {princesa.Datos.Nombre}.";
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                string mensajeFinal = $"Lo siento, no has sido seleccionado por la {princesa.Datos.Nombre}.";
                 CentrarTexto(mensajeFinal);
+                Console.ResetColor();
             }
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            CentrarTexto("Presiona cualquier tecla para continuar...", 3);
+            Console.ResetColor();
 
-            CentrarTexto("Presiona cualquier tecla para continuar...",3);
             Console.ReadKey();
             Console.Clear();
             bool jugarDeNuevo = MostrarMenu();
-            return jugarDeNuevo;           
+            return jugarDeNuevo;
         }
-
+        
         private bool MostrarMenu()
         {
             string[] opciones = { "Mostrar atributos de la princesa", "Reintentar", "Jugar nuevo juego", "Mostrar orden de personajes eliminados", "Cerrar Juego" };
@@ -203,17 +271,17 @@ namespace ProyectoJuegoDeRol.Services
                     Console.Clear(); 
                     break;
                 case 2:
-                    jugarDeNuevo = true; 
+                    LimpiarDatos(); 
                     Console.Clear();
-                    LimpiarDatos();
+                    jugarDeNuevo = true;
                     break;
                 case 3:
                     Console.Clear();
                     MostrarOrdenEliminados();
                     break;
                 case 4:
-                    Console.Clear();
                     LimpiarDatos();
+                    Console.Clear();
                     break;
             }
             return jugarDeNuevo;
@@ -221,19 +289,26 @@ namespace ProyectoJuegoDeRol.Services
 
         private void MostrarOrdenEliminados()
         {
-            Console.Clear();
-            CentrarTexto("Orden de personajes eliminados:",-7);
-            int i=1;
+            ConsoleColorful.Clear();
+            ConsoleColorful.WriteLine("Orden de personajes eliminados:", Color.Magenta);
+
+            int i = 1;
+            int r = 225;
+            int g = 255;
+            int b = 250;
+
             foreach (var personaje in personajesEliminados)
             {
                 string registro = $"{personaje.Datos.Nombre} de {personaje.Datos.Provincia}";
-                CentrarTexto(registro,i-7);
+                ConsoleColorful.WriteLine(new string(' ', (Console.WindowWidth - registro.Length) / 2) + registro, Color.FromArgb(r, g, b));
+                r = Math.Max(r - 18, 0);
+                g = Math.Max(g - 9, 0);
+                b = Math.Max(b - 9, 0);
+
                 i++;
             }
-
-
-            CentrarTexto("\nPresiona cualquier tecla para volver al menú...");
-            Console.ReadKey();
+            ConsoleColorful.WriteLine("Presiona cualquier tecla para volver al menú...", Color.Magenta);
+            ConsoleColorful.ReadKey();
             MostrarMenu();
         }
 
@@ -243,15 +318,34 @@ namespace ProyectoJuegoDeRol.Services
             string titulo = "Compatibilidad con la princesa:";
             int consolaAncho = Console.WindowWidth;
             int paddingTitulo = (consolaAncho - titulo.Length) / 2;
-            Console.WriteLine(new string(' ', paddingTitulo) + titulo);
+            ConsoleColorful.WriteLine(new string(' ', paddingTitulo) + titulo,Color.Magenta);
             Console.WriteLine();
+
             foreach (var personaje in personajes)
             {
                 double compatibilidadActual = CalcularCompatibilidad(personaje);
-                double cambioCompatibilidad = compatibilidadActual - compatibilidadAnterior[personaje];
+                double cambioCompatibilidad = compatibilidadActual - (compatibilidadAnterior.ContainsKey(personaje) ? compatibilidadAnterior[personaje] : 0);
                 string textoCompatibilidad = $"{personaje.Datos.Nombre}: {compatibilidadActual:F2}% (Cambio: {cambioCompatibilidad:F2}%)";
                 int paddingCompatibilidad = (consolaAncho - textoCompatibilidad.Length) / 2;
+
+                if (cambioCompatibilidad > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                else if (cambioCompatibilidad < 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+
                 Console.WriteLine(new string(' ', paddingCompatibilidad) + textoCompatibilidad);
+
+                
+                Console.ResetColor();
+
                 compatibilidadAnterior[personaje] = compatibilidadActual;
             }
         }
@@ -375,20 +469,21 @@ namespace ProyectoJuegoDeRol.Services
                     historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Datos.Nombre} {descripcionAccion}");
                     accionesRealizadas++;
                 }
+            Console.ReadKey();
             }
         }
-
 
         private int MostrarOpcionesYObtenerSeleccion(string[] opciones, bool Barra)
         {
             int seleccion = 0;
+            bool opcionSeleccionada = false;
             while (true)
             {
                 Console.Clear();
-                if(Barra){
+                if (Barra)
+                {
                     MostrarBarraSuperior(personajePrincipal);
                 }
-                
 
                 int anchoConsola = Console.WindowWidth;
                 int alturaConsola = Console.WindowHeight;
@@ -399,33 +494,65 @@ namespace ProyectoJuegoDeRol.Services
                 {
                     Console.WriteLine();
                 }
-                
+
                 string marco1 = "╔════════════ ❀•°❀°•❀ ════════════╗";
                 int padding2 = (anchoConsola - marco1.Length) / 2;
                 string titulo = "Seleccione una opcion:";
                 int padding25 = (anchoConsola - titulo.Length) / 2;
-                Console.WriteLine(new string(' ', padding25) + titulo);
-                Console.WriteLine(new string(' ', padding2) + marco1);
-                
+                ConsoleColorful.WriteLine(new string(' ', padding25) + titulo, Color.Magenta);
+                ConsoleColorful.WriteLine(new string(' ', padding2) + marco1, Color.Cyan);
+
                 for (int i = 0; i < opciones.Length; i++)
                 {
                     string opcion = opciones[i];
                     int padding = (anchoConsola - opcion.Length) / 2;
 
-                    if (i == seleccion)
+                    Color textColor = (i % 2 == 0) ? Color.Plum : Color.PaleVioletRed;
+                    if (i == seleccion && !opcionSeleccionada)
                     {
                         Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        textColor = Color.Black;
                     }
 
-                    Console.WriteLine(new string(' ', padding) + opcion);
-
+                    ConsoleColorful.WriteLine(new string(' ', padding) + opcion, textColor);
                     Console.ResetColor();
                 }
 
                 string marco2 = "╚════════════ ❀•°❀°•❀ ════════════╝";
                 int padding3 = (anchoConsola - marco2.Length) / 2;
-                Console.WriteLine(new string(' ', padding3) + marco2);
+
+                ConsoleColorful.WriteLine(new string(' ', padding3) + marco2, Color.LawnGreen);
+                Console.ResetColor();
+
+                if (opcionSeleccionada)
+                {
+                    Console.Clear();
+                    if (Barra)
+                    {
+                        MostrarBarraSuperior(personajePrincipal);
+                    }
+                    for (int i = 0; i < paddingVertical; i++)
+                    {
+                        Console.WriteLine();
+                    }
+
+                    ConsoleColorful.WriteLine(new string(' ', padding25) + titulo, Color.Magenta);
+                    ConsoleColorful.WriteLine(new string(' ', padding2) + marco1, Color.Cyan);
+
+                    for (int i = 0; i < opciones.Length; i++)
+                    {
+                        string opcion = opciones[i];
+                        int padding = (anchoConsola - opcion.Length) / 2;
+                        Color textColor = (i % 2 == 0) ? Color.MistyRose : Color.PaleVioletRed;
+                        ConsoleColorful.WriteLine(new string(' ', padding) + opcion, textColor);
+                        Console.ResetColor();
+                    }
+
+                    ConsoleColorful.WriteLine(new string(' ', padding3) + marco2, Color.Cyan);
+                    Console.ResetColor();
+
+                    break;
+                }
 
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
 
@@ -439,7 +566,7 @@ namespace ProyectoJuegoDeRol.Services
                 }
                 else if (keyInfo.Key == ConsoleKey.Enter)
                 {
-                    break;
+                    opcionSeleccionada = true;
                 }
             }
 
