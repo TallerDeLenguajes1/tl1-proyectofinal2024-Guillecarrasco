@@ -226,7 +226,7 @@ namespace ProyectoJuegoDeRol.Services
 
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     CentrarTexto("Presiona cualquier tecla para continuar...", 6);
-        
+                    Console.ReadKey();
                 }               
             }
             if (!eliminado && EsGanador(personajePrincipal) && !ganadorPrematuro)
@@ -291,8 +291,6 @@ namespace ProyectoJuegoDeRol.Services
         {
             ConsoleColorful.Clear();
             ConsoleColorful.WriteLine("Orden de personajes eliminados:", Color.Magenta);
-
-            int i = 1;
             int r = 225;
             int g = 255;
             int b = 250;
@@ -304,8 +302,6 @@ namespace ProyectoJuegoDeRol.Services
                 r = Math.Max(r - 18, 0);
                 g = Math.Max(g - 9, 0);
                 b = Math.Max(b - 9, 0);
-
-                i++;
             }
             ConsoleColorful.WriteLine("Presiona cualquier tecla para volver al menú...", Color.Magenta);
             ConsoleColorful.ReadKey();
@@ -576,7 +572,30 @@ namespace ProyectoJuegoDeRol.Services
         private void MostrarBarraSuperior(Personaje personaje)
         {
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine($"Personaje: {personaje.Datos.Nombre} | Inteligencia: {personaje.Caracteristicas.Inteligencia} | Atractivo: {personaje.Caracteristicas.Atractivo} | Carisma: {personaje.Caracteristicas.Carisma} | Hobbie: {personaje.Caracteristicas.Hobbie}");
+            
+            var format = new List<(string Text, Color Color)>
+            {
+                ("Personaje: ", Color.Magenta),
+                (personaje.Datos.Nombre, Color.White),
+                (" | ", Color.Green),
+                ("Inteligencia: ", Color.White),
+                (personaje.Caracteristicas.Inteligencia.ToString(), Color.Magenta),
+                (" | ", Color.Green),
+                ("Atractivo: ", Color.White),
+                (personaje.Caracteristicas.Atractivo.ToString(), Color.Magenta),
+                (" | ", Color.Green),
+                ("Carisma: ", Color.White),
+                (personaje.Caracteristicas.Carisma.ToString(), Color.Magenta),
+                (" | ", Color.Green),
+                ("Hobbie: ", Color.White),
+                (personaje.Caracteristicas.Hobbie.ToString(), Color.Magenta)
+            };
+            
+            foreach (var part in format)
+            {
+                ConsoleColorful.Write(part.Text, part.Color);
+            }
+            
             Console.SetCursorPosition(0, 1);
         }
 
