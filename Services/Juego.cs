@@ -30,6 +30,9 @@ namespace ProyectoJuegoDeRol.Services
 
         public async Task IniciarAsync()
         {
+            bool jugarDeNuevo = false;
+            do
+            {
             if (personajesJson.Existe("Data/personajes.json"))
             {
                 personajes = personajesJson.LeerPersonajes("Data/personajes.json");
@@ -55,7 +58,8 @@ namespace ProyectoJuegoDeRol.Services
             Console.Clear();
             MostrarVideoIntro();
             Console.Clear();
-            SeleccionarPersonaje();
+            jugarDeNuevo= SeleccionarPersonaje();
+            }while(jugarDeNuevo );
         }
     
         private void MostrarPantallaInicial()
@@ -97,14 +101,13 @@ namespace ProyectoJuegoDeRol.Services
                 Console.WriteLine(linea);
             }
         }
-
         private void MostrarVideoIntro()
         {
             Console.WriteLine("Mostrando video de introducción...");
             System.Threading.Thread.Sleep(3000);
         }
 
-        private void SeleccionarPersonaje()
+        private bool SeleccionarPersonaje()
         {
             Console.Clear();
             string[] opcionesPersonajes = personajes.Select(p => $"{p.Datos.Nombre} de {p.Datos.Provincia} (Edad: {p.Datos.Edad})").ToArray();
@@ -113,12 +116,13 @@ namespace ProyectoJuegoDeRol.Services
             personajePrincipal = personajes[seleccion];
             personajes.RemoveAt(seleccion);
             Console.Clear();
-            Jugar();
+            bool jugarDeNuevo = Jugar();
+            return jugarDeNuevo;
 
         }            
 
 
-        private void Jugar()
+        private bool Jugar()
         {
             int semana = 1;
             bool eliminado = false;
@@ -161,17 +165,67 @@ namespace ProyectoJuegoDeRol.Services
 
             if (!eliminado && EsGanador(personajePrincipal) && !ganadorPrematuro)
             {
-                Console.Clear();
-                Console.WriteLine("¡Felicidades! Has sido seleccionada como la princesa.");
+                Console.Clear();               
+                string mensajeFinal="¡Felicidades! Has sido seleccionada como la princesa.";
+                CentrarTexto(mensajeFinal);
             }
             else if(eliminado && !ganadorPrematuro)
             {
                 Console.Clear();
-                Console.WriteLine("Lo siento, no has sido seleccionada como la princesa.");
+                string mensajeFinal="Lo siento, no has sido seleccionada como la princesa.";
+                CentrarTexto(mensajeFinal);
+            }
+            CentrarTexto("Presiona cualquier tecla para continuar...",3);
+            Console.ReadKey();
+            Console.Clear();
+            bool jugarDeNuevo = MostrarMenu();
+            return jugarDeNuevo;           
+        }
+
+        private bool MostrarMenu()
+        {
+            string[] opciones = { "Mostrar atributos del príncipe", "Reintentar", "Jugar nuevo juego", "Mostrar orden de personajes eliminados", "Cerrar Juego" };
+            int seleccion = MostrarOpcionesYObtenerSeleccion(opciones, false);
+            bool jugarDeNuevo=false;
+            switch (seleccion)
+            {
+                case 0:
+                    Console.Clear();
+                    MostrarAtributosPrincipe();
+                    break;
+                case 1:
+                    jugarDeNuevo = true;
+                    Console.Clear(); 
+                    break;
+                case 2:
+                    jugarDeNuevo = true; 
+                    Console.Clear();
+                    LimpiarDatos();
+                    break;
+                case 3:
+                    Console.Clear();
+                    MostrarOrdenEliminados();
+                    break;
+                case 4:
+                    Console.Clear();
+                    break;
+            }
+            return jugarDeNuevo;
+        }
+
+        private void MostrarOrdenEliminados()
+        {
+            Console.Clear();
+            CentrarTexto("Orden de personajes eliminados:");
+
+            foreach (var registro in historial)
+            {
+                CentrarTexto(registro);
             }
 
-            MostrarAtributosPrincipe();
-            LimpiarDatos();
+            CentrarTexto("\nPresiona cualquier tecla para volver al menú...");
+            Console.ReadKey();
+            MostrarMenu();
         }
 
         private void MostrarCompatibilidadConPrincipe()
@@ -286,10 +340,13 @@ namespace ProyectoJuegoDeRol.Services
                     Console.WriteLine();
                 }
                 
-                string marco1 = "╔══════ ❀•°❀°•❀ ══════╗";
+                string marco1 = "╔════════════ ❀•°❀°•❀ ════════════╗";
                 int padding2 = (anchoConsola - marco1.Length) / 2;
+                string titulo = "Seleccione una opcion:";
+                int padding25 = (anchoConsola - titulo.Length) / 2;
+                Console.WriteLine(new string(' ', padding25) + titulo);
                 Console.WriteLine(new string(' ', padding2) + marco1);
-                Console.WriteLine("\nSeleccione una opción:");
+                
                 for (int i = 0; i < opciones.Length; i++)
                 {
                     string opcion = opciones[i];
@@ -306,7 +363,7 @@ namespace ProyectoJuegoDeRol.Services
                     Console.ResetColor();
                 }
 
-                string marco2 = "╚══════ ❀•°❀°•❀ ══════╝";
+                string marco2 = "╚════════════ ❀•°❀°•❀ ════════════╝";
                 int padding3 = (anchoConsola - marco2.Length) / 2;
                 Console.WriteLine(new string(' ', padding3) + marco2);
 
@@ -335,6 +392,7 @@ namespace ProyectoJuegoDeRol.Services
             Console.WriteLine($"Personaje: {personaje.Datos.Nombre} | Inteligencia: {personaje.Caracteristicas.Inteligencia} | Atractivo: {personaje.Caracteristicas.Atractivo} | Carisma: {personaje.Caracteristicas.Carisma} | Hobbie: {personaje.Caracteristicas.Hobbie}");
             Console.SetCursorPosition(0, 1);
         }
+
         private void RealizarAccionesAleatorias(Personaje personaje)
         {
             Random random = new Random();
@@ -397,20 +455,24 @@ namespace ProyectoJuegoDeRol.Services
         }
         private void MostrarAtributosPersonaje(Personaje personaje)
         {
-            Console.WriteLine($"Atributos de {personaje.Datos.Nombre}:");
-            Console.WriteLine($"Inteligencia: {personaje.Caracteristicas.Inteligencia}");
-            Console.WriteLine($"Atractivo: {personaje.Caracteristicas.Atractivo}");
-            Console.WriteLine($"Carisma: {personaje.Caracteristicas.Carisma}");
-            Console.WriteLine($"Hobbie: {personaje.Caracteristicas.Hobbie}");
+            CentrarTexto(@$"Atributos de {personaje.Datos.Nombre}
+            Inteligencia: {personaje.Caracteristicas.Inteligencia}
+            Atractivo: {personaje.Caracteristicas.Atractivo}
+            Carisma: {personaje.Caracteristicas.Carisma}
+            Hobbie: {personaje.Caracteristicas.Hobbie}");
         }
 
         private void MostrarAtributosPrincipe()
         {
-            Console.WriteLine($"Atributos del Príncipe:");
-            Console.WriteLine($"Inteligencia: {principe.Caracteristicas.Inteligencia}");
-            Console.WriteLine($"Atractivo: {principe.Caracteristicas.Atractivo}");
-            Console.WriteLine($"Carisma: {principe.Caracteristicas.Carisma}");
-            Console.WriteLine($"Hobbie: {principe.Caracteristicas.Hobbie}");
+            CentrarTexto(@$"Atributos del Príncipe:
+            Inteligencia: {principe.Caracteristicas.Inteligencia}
+            Atractivo: {principe.Caracteristicas.Atractivo}
+            Carisma: {principe.Caracteristicas.Carisma}
+            Hobbie: {principe.Caracteristicas.Hobbie}
+            Presiona cualquier tecla para volver al menú...
+            ");
+            Console.ReadKey();
+            MostrarMenu();
         }
 
         private void LimpiarDatos()
