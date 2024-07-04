@@ -65,27 +65,36 @@ namespace ProyectoJuegoDeRol.Services
 
         private void SeleccionarPersonaje()
         {
-            Console.Clear();
+            while (true)
+            {
+                Console.Clear();
+                MostrarPersonajes();
+
+                Console.WriteLine("Ingrese el número del personaje que desea seleccionar:");
+                if (int.TryParse(Console.ReadLine(), out int seleccion) && seleccion >= 1 && seleccion <= personajes.Count)
+                {
+                    seleccion--; 
+                    personajePrincipal = personajes[seleccion];
+                    personajes.RemoveAt(seleccion);
+                    Jugar();
+                    break;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Entrada no válida. Por favor, ingrese un número dentro del rango.");
+                }
+            }
+        }            
+                        
+        private void MostrarPersonajes()
+        {
             Console.WriteLine("Seleccione su personaje:");
             for (int i = 0; i < personajes.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {personajes[i].Datos.Nombre} de {personajes[i].Datos.Provincia} (Edad: {personajes[i].Datos.Edad})");
             }
-
-            int seleccion;
-            
-            do
-            {
-                Console.WriteLine("Ingrese el número del personaje que desea seleccionar:");
-                seleccion = int.Parse(Console.ReadLine()) - 1;
-            } while (seleccion < 0 || seleccion >= personajes.Count);
-
-            personajePrincipal = personajes[seleccion];
-            personajes.RemoveAt(seleccion);
-
-            Jugar();
         }
-
         private void Jugar()
         {
             int semana = 1;
