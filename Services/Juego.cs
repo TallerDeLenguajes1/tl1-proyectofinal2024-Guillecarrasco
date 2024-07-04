@@ -4,7 +4,7 @@ using ProyectoJuegoDeRol.Utils;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using System.Linq;
 
 namespace ProyectoJuegoDeRol.Services
 {
@@ -53,48 +53,71 @@ namespace ProyectoJuegoDeRol.Services
             }
             MostrarPantallaInicial();
             Console.Clear();
+            MostrarVideoIntro();
+            Console.Clear();
             SeleccionarPersonaje();
         }
     
         private void MostrarPantallaInicial()
+        {
+            string title = @"
+                █████ █                                       ███                                                                
+            ██████  █                                         ███                                   █          █                 
+            ██   █  █                                           ██                                  ███        ██                  
+            █    █  █                                            ██                                   █        ██                   
+                █  █                                             ██                                                               
+            ██ ██              ████          ████      ███    ██      ███       ████      ████   ███       ████   ███  ████    
+            ██ ██             █ ███  █      █ ████ █  █ ███   ██     █ ███     █ ███  █  █ ███  █ ███     █ ███  █ ████ ████ █ 
+            ██ ██            █   ████      ██  ████  █   ███  ██    █   ███   █   ████  █   ████   ██    █   ████   ██   ████  
+            ██ ██           ██    ██      ████      ██    ███ ██   ██    ███ ██        ██          ██   ██    ██    ██    ██   
+            ██ ██           ██    ██        ███     ████████  ██   ████████  ██        ██          ██   ██    ██    ██    ██   
+            █  ██           ██    ██          ███   ███████   ██   ███████   ██        ██          ██   ██    ██    ██    ██   
+            █  █            ██    ██            ███ ██        ██   ██        ██        ██          ██   ██    ██    ██    ██   
+            ████           █ ██    ██       ████  ██ ████    █ ██   ████    █ ███     █ ███     █   ██   ██    ██    ██    ██   
+            █  █████████████   █████ ██     █ ████ █   ███████  ███ █ ███████   ███████   ███████    ███ █ ██████     ███   ███  
+            █     █████████      ███   ██       ████     █████    ███   █████     █████     █████      ███   ████       ███   ███ 
+            █                                                                                                                     
+            ██                                                                                                                   
+            ";
+            Console.Clear();
+            CenterText(title);
+            CenterText("Toque cualquier tecla para empezar", 8);
+            Console.SetCursorPosition((Console.WindowWidth / 2) - 1, Console.CursorTop + 2);
+            Console.ReadKey();
+        }
+        
+        private void CenterText(string text, int offsetLines = 0)
+        {
+            string[] lines = text.Split('\n');
+            int top = (Console.WindowHeight - lines.Length) / 2 + offsetLines;
+            foreach (var line in lines)
             {
-                Console.WriteLine("La seleccion");
-                Console.ReadKey();
-                Console.Clear();
+                int left = (Console.WindowWidth - line.Length) / 2;
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine(line);
             }
+        }
+
+        private void MostrarVideoIntro()
+        {
+            Console.WriteLine("Mostrando video de introducción...");
+            System.Threading.Thread.Sleep(3000);
+        }
 
         private void SeleccionarPersonaje()
         {
-            while (true)
-            {
-                Console.Clear();
-                MostrarPersonajes();
+            Console.Clear();
+            string[] opcionesPersonajes = personajes.Select(p => $"{p.Datos.Nombre} de {p.Datos.Provincia} (Edad: {p.Datos.Edad})").ToArray();
+            Console.WriteLine("Seleccione el personaje que quiera ser:");
+            int seleccion = MostrarOpcionesYObtenerSeleccion(opcionesPersonajes, false);
+            personajePrincipal = personajes[seleccion];
+            personajes.RemoveAt(seleccion);
+            Console.Clear();
+            Jugar();
 
-                Console.WriteLine("Ingrese el número del personaje que desea seleccionar:");
-                if (int.TryParse(Console.ReadLine(), out int seleccion) && seleccion >= 1 && seleccion <= personajes.Count)
-                {
-                    seleccion--; 
-                    personajePrincipal = personajes[seleccion];
-                    personajes.RemoveAt(seleccion);
-                    Jugar();
-                    break;
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Entrada no válida. Por favor, ingrese un número dentro del rango.");
-                }
-            }
         }            
-                        
-        private void MostrarPersonajes()
-        {
-            Console.WriteLine("Seleccione su personaje:");
-            for (int i = 0; i < personajes.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {personajes[i].Datos.Nombre} de {personajes[i].Datos.Provincia} (Edad: {personajes[i].Datos.Edad})");
-            }
-        }
+
+
         private void Jugar()
         {
             int semana = 1;
@@ -186,19 +209,10 @@ namespace ProyectoJuegoDeRol.Services
         private void ElegirHobbie(Personaje personaje)
         {
             var hobbies = Enum.GetValues(typeof(Hobbie)).Cast<Hobbie>().ToList();
+            string[] opcionesHobbies = hobbies.Select(h => h.ToString()).ToArray();
+            string[] botonesHobbies = opcionesHobbies.Select(h => $"⋆˖⁺‧₊☽ {h} ☾₊‧⁺˖⋆").ToArray();
             Console.WriteLine("Seleccione un hobbie:");
-            for (int i = 0; i < hobbies.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {hobbies[i]}");
-            }
-
-            int seleccion;
-            do
-            {
-                Console.WriteLine("Ingrese el número del hobbie que desea seleccionar:");
-                seleccion = int.Parse(Console.ReadLine()) - 1;
-            } while (seleccion < 0 || seleccion >= hobbies.Count);
-
+            int seleccion = MostrarOpcionesYObtenerSeleccion(botonesHobbies, true);
             personaje.Caracteristicas.Hobbie = hobbies[seleccion];
         }
 
@@ -219,7 +233,7 @@ namespace ProyectoJuegoDeRol.Services
                 MostrarBarraSuperior(personajePrincipal);
                 Console.WriteLine("\nSeleccione una acción para realizar:");
 
-                int seleccion = MostrarOpcionesYObtenerSeleccion(botones);
+                int seleccion = MostrarOpcionesYObtenerSeleccion(botones, true);
 
                 int accion = seleccion + 1;
 
@@ -241,18 +255,20 @@ namespace ProyectoJuegoDeRol.Services
             }
         }
 
-        private int MostrarOpcionesYObtenerSeleccion(string[] botones)
+        private int MostrarOpcionesYObtenerSeleccion(string[] opciones, bool Barra)
         {
             int seleccion = 0;
             while (true)
             {
                 Console.Clear();
-                MostrarBarraSuperior(personajePrincipal);
-                Console.WriteLine("\nSeleccione una acción para realizar:");
+                if(Barra){
+                    MostrarBarraSuperior(personajePrincipal);
+                }
+                Console.WriteLine("\nSeleccione una opción:");
 
                 int anchoConsola = Console.WindowWidth;
                 int alturaConsola = Console.WindowHeight;
-                int alturaBotones = botones.Length * 2; 
+                int alturaBotones = opciones.Length * 2;
                 int paddingVertical = (alturaConsola - (alturaBotones + 1)) / 2;
 
                 for (int i = 0; i < paddingVertical; i++)
@@ -264,10 +280,10 @@ namespace ProyectoJuegoDeRol.Services
                 int padding2 = (anchoConsola - marco1.Length) / 2;
                 Console.WriteLine(new string(' ', padding2) + marco1);
 
-                for (int i = 0; i < botones.Length; i++)
+                for (int i = 0; i < opciones.Length; i++)
                 {
-                    string boton = botones[i];
-                    int padding = (anchoConsola - boton.Length) / 2;
+                    string opcion = opciones[i];
+                    int padding = (anchoConsola - opcion.Length) / 2;
 
                     if (i == seleccion)
                     {
@@ -275,10 +291,9 @@ namespace ProyectoJuegoDeRol.Services
                         Console.ForegroundColor = ConsoleColor.Black;
                     }
 
-                    Console.WriteLine(new string(' ', padding) + boton);
+                    Console.WriteLine(new string(' ', padding) + opcion);
 
                     Console.ResetColor();
-                    Console.WriteLine();
                 }
 
                 string marco2 = "╚══════ ❀•°❀°•❀ ══════╝";
@@ -289,11 +304,11 @@ namespace ProyectoJuegoDeRol.Services
 
                 if (keyInfo.Key == ConsoleKey.UpArrow)
                 {
-                    seleccion = (seleccion == 0) ? botones.Length - 1 : seleccion - 1;
+                    seleccion = (seleccion == 0) ? opciones.Length - 1 : seleccion - 1;
                 }
                 else if (keyInfo.Key == ConsoleKey.DownArrow)
                 {
-                    seleccion = (seleccion == botones.Length - 1) ? 0 : seleccion + 1;
+                    seleccion = (seleccion == opciones.Length - 1) ? 0 : seleccion + 1;
                 }
                 else if (keyInfo.Key == ConsoleKey.Enter)
                 {
@@ -303,7 +318,6 @@ namespace ProyectoJuegoDeRol.Services
 
             return seleccion;
         }
-
 
         private void MostrarBarraSuperior(Personaje personaje)
         {

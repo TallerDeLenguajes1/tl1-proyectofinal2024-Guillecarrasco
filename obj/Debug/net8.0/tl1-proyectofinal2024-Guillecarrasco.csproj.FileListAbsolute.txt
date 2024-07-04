@@ -13,3 +13,6 @@ C:\Users\pc\Desktop\tallerLenguajes\tl1-proyectofinal2024-Guillecarrasco\obj\Deb
 C:\Users\pc\Desktop\tallerLenguajes\tl1-proyectofinal2024-Guillecarrasco\obj\Debug\net8.0\tl1-proyectofinal2024-Guillecarrasco.pdb
 C:\Users\pc\Desktop\tallerLenguajes\tl1-proyectofinal2024-Guillecarrasco\obj\Debug\net8.0\tl1-proyectofinal2024-Guillecarrasco.genruntimeconfig.cache
 C:\Users\pc\Desktop\tallerLenguajes\tl1-proyectofinal2024-Guillecarrasco\obj\Debug\net8.0\ref\tl1-proyectofinal2024-Guillecarrasco.dll
+C:\Users\pc\Desktop\tallerLenguajes\tl1-proyectofinal2024-Guillecarrasco\bin\Debug\net8.0\Colorful.Console.dll
+C:\Users\pc\Desktop\tallerLenguajes\tl1-proyectofinal2024-Guillecarrasco\obj\Debug\net8.0\tl1-proyectofinal2024-Guillecarrasco.csproj.AssemblyReference.cache
+C:\Users\pc\Desktop\tallerLenguajes\tl1-proyectofinal2024-Guillecarrasco\obj\Debug\net8.0\tl1-proy.BDB079D5.Up2Date

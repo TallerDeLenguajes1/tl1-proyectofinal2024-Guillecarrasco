@@ -1,322 +1,322 @@
 [
   {
     "Datos": {
-      "Nombre": "Darci Konecni",
-      "Edad": 29,
-      "Provincia": "Misiones"
+      "Nombre": "Irma Sandison",
+      "Edad": 28,
+      "Provincia": "Chaco"
     },
     "Caracteristicas": {
-      "Carisma": 10,
-      "Inteligencia": 6,
-      "Atractivo": 4,
-      "Hobbie": "Deporte"
+      "Carisma": 9,
+      "Inteligencia": 7,
+      "Atractivo": 2,
+      "Hobbie": "Fotograf\u00EDa"
     },
     "Compatibilidad": {
-      "CompatibilidadValor": 0.31699196712253774
+      "CompatibilidadValor": 0.8926181531282544
     }
   },
   {
     "Datos": {
-      "Nombre": "Raelene Gwalthney",
-      "Edad": 39,
-      "Provincia": "Catamarca"
-    },
-    "Caracteristicas": {
-      "Carisma": 4,
-      "Inteligencia": 9,
-      "Atractivo": 4,
-      "Hobbie": "Deporte"
-    },
-    "Compatibilidad": {
-      "CompatibilidadValor": 0.7782248841244042
-    }
-  },
-  {
-    "Datos": {
-      "Nombre": "Sena Bridges",
-      "Edad": 23,
+      "Nombre": "Chrystal Harlowe",
+      "Edad": 57,
       "Provincia": "Salta"
+    },
+    "Caracteristicas": {
+      "Carisma": 3,
+      "Inteligencia": 6,
+      "Atractivo": 7,
+      "Hobbie": "Deporte"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.4053677551792446
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Salley Fornes",
+      "Edad": 28,
+      "Provincia": "SantaCruz"
+    },
+    "Caracteristicas": {
+      "Carisma": 3,
+      "Inteligencia": 7,
+      "Atractivo": 2,
+      "Hobbie": "Leer"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.28278776207882617
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Assunta Heidelburg",
+      "Edad": 23,
+      "Provincia": "Cordoba"
+    },
+    "Caracteristicas": {
+      "Carisma": 2,
+      "Inteligencia": 9,
+      "Atractivo": 8,
+      "Hobbie": "Leer"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.1654058506040612
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Maddie Grogg",
+      "Edad": 51,
+      "Provincia": "Formosa"
+    },
+    "Caracteristicas": {
+      "Carisma": 9,
+      "Inteligencia": 1,
+      "Atractivo": 5,
+      "Hobbie": "Leer"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.16341004572328632
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Myrtle Yeatts",
+      "Edad": 18,
+      "Provincia": "BuenosAires"
+    },
+    "Caracteristicas": {
+      "Carisma": 6,
+      "Inteligencia": 4,
+      "Atractivo": 5,
+      "Hobbie": "Deporte"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.7023536225384409
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Eneida Kildare",
+      "Edad": 34,
+      "Provincia": "Neuquen"
     },
     "Caracteristicas": {
       "Carisma": 1,
       "Inteligencia": 8,
       "Atractivo": 5,
-      "Hobbie": "Cine"
+      "Hobbie": "Leer"
     },
     "Compatibilidad": {
-      "CompatibilidadValor": 0.6483308195964305
+      "CompatibilidadValor": 0.48500738814473066
     }
   },
   {
     "Datos": {
-      "Nombre": "Kimberli Colgate",
-      "Edad": 22,
-      "Provincia": "Jujuy"
-    },
-    "Caracteristicas": {
-      "Carisma": 9,
-      "Inteligencia": 9,
-      "Atractivo": 6,
-      "Hobbie": "Cine"
-    },
-    "Compatibilidad": {
-      "CompatibilidadValor": 0.7919649884810347
-    }
-  },
-  {
-    "Datos": {
-      "Nombre": "Lyda Reitz",
-      "Edad": 22,
-      "Provincia": "SantaCruz"
-    },
-    "Caracteristicas": {
-      "Carisma": 2,
-      "Inteligencia": 6,
-      "Atractivo": 3,
-      "Hobbie": "Cine"
-    },
-    "Compatibilidad": {
-      "CompatibilidadValor": 0.07887531735957864
-    }
-  },
-  {
-    "Datos": {
-      "Nombre": "Thanh Curzi",
-      "Edad": 59,
+      "Nombre": "Rosie Keto",
+      "Edad": 55,
       "Provincia": "Misiones"
     },
     "Caracteristicas": {
       "Carisma": 4,
-      "Inteligencia": 7,
-      "Atractivo": 2,
-      "Hobbie": "Cine"
-    },
-    "Compatibilidad": {
-      "CompatibilidadValor": 0.19266732134141284
-    }
-  },
-  {
-    "Datos": {
-      "Nombre": "Elin Czuba",
-      "Edad": 36,
-      "Provincia": "Chubut"
-    },
-    "Caracteristicas": {
-      "Carisma": 3,
-      "Inteligencia": 1,
-      "Atractivo": 4,
-      "Hobbie": "Cine"
-    },
-    "Compatibilidad": {
-      "CompatibilidadValor": 0.3222407492180225
-    }
-  },
-  {
-    "Datos": {
-      "Nombre": "Leonora Ouelette",
-      "Edad": 46,
-      "Provincia": "SanJuan"
-    },
-    "Caracteristicas": {
-      "Carisma": 1,
-      "Inteligencia": 10,
-      "Atractivo": 10,
-      "Hobbie": "Cine"
-    },
-    "Compatibilidad": {
-      "CompatibilidadValor": 0.6472061991498371
-    }
-  },
-  {
-    "Datos": {
-      "Nombre": "Katheleen Rustad",
-      "Edad": 46,
-      "Provincia": "SantiagodelEstero"
-    },
-    "Caracteristicas": {
-      "Carisma": 2,
       "Inteligencia": 8,
-      "Atractivo": 3,
+      "Atractivo": 10,
       "Hobbie": "Fotograf\u00EDa"
     },
     "Compatibilidad": {
-      "CompatibilidadValor": 0.7039952754766977
+      "CompatibilidadValor": 0.22499604902299242
     }
   },
   {
     "Datos": {
-      "Nombre": "Kristina Brandle",
-      "Edad": 23,
-      "Provincia": "Catamarca"
+      "Nombre": "Amira Beitzel",
+      "Edad": 33,
+      "Provincia": "Santafe"
     },
     "Caracteristicas": {
-      "Carisma": 7,
-      "Inteligencia": 6,
-      "Atractivo": 6,
+      "Carisma": 8,
+      "Inteligencia": 8,
+      "Atractivo": 2,
+      "Hobbie": "Fotograf\u00EDa"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.45624215848712024
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Tasha Scoggins",
+      "Edad": 26,
+      "Provincia": "SantaCruz"
+    },
+    "Caracteristicas": {
+      "Carisma": 10,
+      "Inteligencia": 8,
+      "Atractivo": 9,
       "Hobbie": "Ajedrez"
     },
     "Compatibilidad": {
-      "CompatibilidadValor": 0.25313868690918184
+      "CompatibilidadValor": 0.774225881250487
     }
   },
   {
     "Datos": {
-      "Nombre": "Inga Castelli",
-      "Edad": 57,
-      "Provincia": "Chubut"
-    },
-    "Caracteristicas": {
-      "Carisma": 3,
-      "Inteligencia": 5,
-      "Atractivo": 4,
-      "Hobbie": "Deporte"
-    },
-    "Compatibilidad": {
-      "CompatibilidadValor": 0.08104747285718306
-    }
-  },
-  {
-    "Datos": {
-      "Nombre": "Nancey Tureson",
-      "Edad": 39,
-      "Provincia": "Jujuy"
-    },
-    "Caracteristicas": {
-      "Carisma": 9,
-      "Inteligencia": 1,
-      "Atractivo": 7,
-      "Hobbie": "Leer"
-    },
-    "Compatibilidad": {
-      "CompatibilidadValor": 0.31288399968034586
-    }
-  },
-  {
-    "Datos": {
-      "Nombre": "Rosaria Baudler",
-      "Edad": 21,
-      "Provincia": "Neuquen"
-    },
-    "Caracteristicas": {
-      "Carisma": 3,
-      "Inteligencia": 8,
-      "Atractivo": 8,
-      "Hobbie": "Leer"
-    },
-    "Compatibilidad": {
-      "CompatibilidadValor": 0.6677913631141784
-    }
-  },
-  {
-    "Datos": {
-      "Nombre": "Maximina Szwarc",
-      "Edad": 26,
-      "Provincia": "SantiagodelEstero"
-    },
-    "Caracteristicas": {
-      "Carisma": 6,
-      "Inteligencia": 1,
-      "Atractivo": 8,
-      "Hobbie": "Deporte"
-    },
-    "Compatibilidad": {
-      "CompatibilidadValor": 0.46356500129143485
-    }
-  },
-  {
-    "Datos": {
-      "Nombre": "Yessenia Zoebisch",
-      "Edad": 49,
+      "Nombre": "Song Marolt",
+      "Edad": 50,
       "Provincia": "Corrientes"
     },
     "Caracteristicas": {
       "Carisma": 5,
-      "Inteligencia": 1,
-      "Atractivo": 7,
-      "Hobbie": "Cine"
+      "Inteligencia": 5,
+      "Atractivo": 10,
+      "Hobbie": "Ajedrez"
     },
     "Compatibilidad": {
-      "CompatibilidadValor": 0.03029020081508449
+      "CompatibilidadValor": 0.8370979172159321
     }
   },
   {
     "Datos": {
-      "Nombre": "Gemma Furino",
-      "Edad": 23,
-      "Provincia": "Salta"
+      "Nombre": "Altha Palino",
+      "Edad": 24,
+      "Provincia": "EntreRios"
     },
     "Caracteristicas": {
-      "Carisma": 9,
+      "Carisma": 7,
       "Inteligencia": 9,
+      "Atractivo": 2,
+      "Hobbie": "Ajedrez"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.31781133821045193
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Doreatha Trilling",
+      "Edad": 34,
+      "Provincia": "Chaco"
+    },
+    "Caracteristicas": {
+      "Carisma": 5,
+      "Inteligencia": 4,
+      "Atractivo": 5,
+      "Hobbie": "Deporte"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.7742594028501804
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Lisandra Ziech",
+      "Edad": 21,
+      "Provincia": "Chaco"
+    },
+    "Caracteristicas": {
+      "Carisma": 4,
+      "Inteligencia": 10,
       "Atractivo": 6,
       "Hobbie": "Fotograf\u00EDa"
     },
     "Compatibilidad": {
-      "CompatibilidadValor": 0.727403896441867
+      "CompatibilidadValor": 0.7752423301864722
     }
   },
   {
     "Datos": {
-      "Nombre": "Ladawn Manion",
-      "Edad": 48,
-      "Provincia": "SanJuan"
+      "Nombre": "Ashlyn Lushbaugh",
+      "Edad": 18,
+      "Provincia": "BuenosAires"
     },
     "Caracteristicas": {
-      "Carisma": 3,
-      "Inteligencia": 9,
-      "Atractivo": 7,
-      "Hobbie": "Leer"
-    },
-    "Compatibilidad": {
-      "CompatibilidadValor": 0.41687478276480794
-    }
-  },
-  {
-    "Datos": {
-      "Nombre": "Thomasena Stollar",
-      "Edad": 28,
-      "Provincia": "SanLuis"
-    },
-    "Caracteristicas": {
-      "Carisma": 5,
-      "Inteligencia": 8,
-      "Atractivo": 2,
+      "Carisma": 1,
+      "Inteligencia": 4,
+      "Atractivo": 9,
       "Hobbie": "Fotograf\u00EDa"
     },
     "Compatibilidad": {
-      "CompatibilidadValor": 0.6409097029836665
+      "CompatibilidadValor": 0.9575142286095634
     }
   },
   {
     "Datos": {
-      "Nombre": "Halina Hetherman",
-      "Edad": 47,
-      "Provincia": "SantiagodelEstero"
+      "Nombre": "Anika Gunselman",
+      "Edad": 54,
+      "Provincia": "Chubut"
     },
     "Caracteristicas": {
       "Carisma": 3,
-      "Inteligencia": 7,
+      "Inteligencia": 8,
       "Atractivo": 8,
-      "Hobbie": "Ajedrez"
+      "Hobbie": "Deporte"
     },
     "Compatibilidad": {
-      "CompatibilidadValor": 0.8892025459610545
+      "CompatibilidadValor": 0.17900608042123245
     }
   },
   {
     "Datos": {
-      "Nombre": "Velda Fleeger",
-      "Edad": 25,
-      "Provincia": "SantaCruz"
+      "Nombre": "Charlesetta Lodholz",
+      "Edad": 20,
+      "Provincia": "Catamarca"
     },
     "Caracteristicas": {
-      "Carisma": 2,
-      "Inteligencia": 10,
-      "Atractivo": 5,
-      "Hobbie": "Ajedrez"
+      "Carisma": 10,
+      "Inteligencia": 1,
+      "Atractivo": 10,
+      "Hobbie": "Deporte"
     },
     "Compatibilidad": {
-      "CompatibilidadValor": 0.5872697415992079
+      "CompatibilidadValor": 0.611340815530623
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Lory Aramini",
+      "Edad": 47,
+      "Provincia": "CiudadAutonomadeBuenosAires"
+    },
+    "Caracteristicas": {
+      "Carisma": 5,
+      "Inteligencia": 1,
+      "Atractivo": 4,
+      "Hobbie": "Deporte"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.6444310786692927
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Kristel Landing",
+      "Edad": 40,
+      "Provincia": "Cordoba"
+    },
+    "Caracteristicas": {
+      "Carisma": 7,
+      "Inteligencia": 2,
+      "Atractivo": 8,
+      "Hobbie": "Leer"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.9410085714988575
+    }
+  },
+  {
+    "Datos": {
+      "Nombre": "Caroyln Scali",
+      "Edad": 28,
+      "Provincia": "Chubut"
+    },
+    "Caracteristicas": {
+      "Carisma": 1,
+      "Inteligencia": 1,
+      "Atractivo": 4,
+      "Hobbie": "Fotograf\u00EDa"
+    },
+    "Compatibilidad": {
+      "CompatibilidadValor": 0.5647224366780775
     }
   }
 ]
