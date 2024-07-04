@@ -28,9 +28,9 @@ namespace ProyectoJuegoDeRol.Services
             compatibilidadAnterior = new Dictionary<Personaje, double>();     
         }
 
-    public async Task IniciarAsync()
+        public async Task IniciarAsync()
         {
-             if (personajesJson.Existe("Data/personajes.json"))
+            if (personajesJson.Existe("Data/personajes.json"))
             {
                 personajes = personajesJson.LeerPersonajes("Data/personajes.json");
             }
@@ -56,15 +56,15 @@ namespace ProyectoJuegoDeRol.Services
             SeleccionarPersonaje();
         }
     
-    private void MostrarPantallaInicial()
-        {
-            Console.WriteLine("La seleccion");
+        private void MostrarPantallaInicial()
+            {
+                Console.WriteLine("La seleccion");
 
-            Console.ReadKey();
-            Console.Clear();
-        }
+                Console.ReadKey();
+                Console.Clear();
+            }
 
- private void SeleccionarPersonaje()
+        private void SeleccionarPersonaje()
         {
             Console.Clear();
             Console.WriteLine("Seleccione su personaje:");
@@ -87,7 +87,7 @@ namespace ProyectoJuegoDeRol.Services
             Jugar();
         }
 
-         private void Jugar()
+        private void Jugar()
         {
             int semana = 1;
             bool eliminado = false;
@@ -164,109 +164,115 @@ namespace ProyectoJuegoDeRol.Services
         }
 
 
-}
 
-private void RealizarAccionesSemanales()
-{
-    int accionesRealizadas = 0;
-    while (accionesRealizadas < 3)
-    {
-        Console.Clear();
-        MostrarBarraSuperior(personajePrincipal);
 
-        Console.WriteLine("\nSeleccione una acción para realizar:");
-
-        string[] opciones = {
-            "Subir inteligencia", "Bajar inteligencia",
-            "Subir atractivo", "Bajar atractivo", "Subir carisma",
-            "Bajar carisma", "Elegir hobbie de la semana"
-        };
-
-        string[] botones = opciones.Select(o => $"⋆˖⁺‧₊☽ {o} ☾₊‧⁺˖⋆").ToArray();
-
-        int selectedOption = 0;
-
-        while (true)
+        private void RealizarAccionesSemanales()
         {
-            Console.Clear();
-            MostrarBarraSuperior(personajePrincipal);
-            Console.WriteLine("\nSeleccione una acción para realizar:");
-
-            int consoleWidth = Console.WindowWidth;
-            int consoleHeight = Console.WindowHeight;
-            int botonesHeight = botones.Length + botones.Length; // Número de opciones más una línea en blanco entre cada opción
-            int verticalPadding = (consoleHeight - (botonesHeight + 1)) / 2;
-
-            // Imprimir espacios verticales para centrar
-            for (int i = 0; i < verticalPadding; i++)
+            int accionesRealizadas = 0;
+            while (accionesRealizadas < 3)
             {
-                Console.WriteLine();
-            }
-            string marco1 = "╔══════ ❀•°❀°•❀ ══════╗";
-             int padding2 = (consoleWidth - marco1.Length) / 2;
-            Console.WriteLine(new string(' ', padding2) + marco1);
-            for (int i = 0; i < botones.Length; i++)
-            {
-                string boton = botones[i];
-                int padding = (consoleWidth - boton.Length) / 2;
+                Console.Clear();
+                MostrarBarraSuperior(personajePrincipal);
 
-                if (i == selectedOption)
+                Console.WriteLine("\nSeleccione una acción para realizar:");
+
+                string[] opciones = {
+                    "Subir inteligencia", "Bajar inteligencia",
+                    "Subir atractivo", "Bajar atractivo", "Subir carisma",
+                    "Bajar carisma", "Elegir hobbie de la semana"
+                };
+
+                string[] botones = opciones.Select(o => $"⋆˖⁺‧₊☽ {o} ☾₊‧⁺˖⋆").ToArray();
+
+                int selectedOption = 0;
+
+                while (true)
                 {
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Clear();
+                    MostrarBarraSuperior(personajePrincipal);
+                    Console.WriteLine("\nSeleccione una acción para realizar:");
+
+                    int consoleWidth = Console.WindowWidth;
+                    int consoleHeight = Console.WindowHeight;
+                    int botonesHeight = botones.Length + botones.Length; 
+                    int verticalPadding = (consoleHeight - (botonesHeight + 1)) / 2;
+
+                    
+                    for (int i = 0; i < verticalPadding; i++)
+                    {
+                        Console.WriteLine();
+                    }
+                    string marco1 = "╔══════ ❀•°❀°•❀ ══════╗";
+                    int padding2 = (consoleWidth - marco1.Length) / 2;
+                    Console.WriteLine(new string(' ', padding2) + marco1);
+                    for (int i = 0; i < botones.Length; i++)
+                    {
+                        string boton = botones[i];
+                        int padding = (consoleWidth - boton.Length) / 2;
+
+                        if (i == selectedOption)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Gray;
+                            Console.ForegroundColor = ConsoleColor.Black;
+                        }
+
+                        Console.WriteLine(new string(' ', padding) + boton);
+
+                        Console.ResetColor();
+                        Console.WriteLine(); 
+                    }
+                    string marco2 = "╚══════ ❀•°❀°•❀ ══════╝";
+                    int padding3 = (consoleWidth - marco2.Length) / 2;
+                    Console.WriteLine(new string(' ', padding3) + marco2);
+
+                    ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+                    if (keyInfo.Key == ConsoleKey.UpArrow)
+                    {
+                        selectedOption = (selectedOption == 0) ? botones.Length - 1 : selectedOption - 1;
+                    }
+                    else if (keyInfo.Key == ConsoleKey.DownArrow)
+                    {
+                        selectedOption = (selectedOption == botones.Length - 1) ? 0 : selectedOption + 1;
+                    }
+                    else if (keyInfo.Key == ConsoleKey.Enter)
+                    {
+                        break;
+                    }
                 }
 
-                Console.WriteLine(new string(' ', padding) + boton);
+                int accion = selectedOption + 1;
 
-                Console.ResetColor();
-                Console.WriteLine(); // Espacio entre botones
-            }
-            string marco2 = "╚══════ ❀•°❀°•❀ ══════╝";
-             int padding3 = (consoleWidth - marco2.Length) / 2;
-            Console.WriteLine(new string(' ', padding3) + marco2);
-
-            ConsoleKeyInfo keyInfo = Console.ReadKey();
-
-            if (keyInfo.Key == ConsoleKey.UpArrow)
-            {
-                selectedOption = (selectedOption == 0) ? botones.Length - 1 : selectedOption - 1;
-            }
-            else if (keyInfo.Key == ConsoleKey.DownArrow)
-            {
-                selectedOption = (selectedOption == botones.Length - 1) ? 0 : selectedOption + 1;
-            }
-            else if (keyInfo.Key == ConsoleKey.Enter)
-            {
-                break;
+                if (accion >= 1 && accion <= 7)
+                {
+                    if (accion == 7)
+                    {
+                        ElegirHobbie(personajePrincipal);
+                        historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Datos.Nombre} eligió un nuevo hobbie.");
+                        accionesRealizadas++;
+                    }
+                    else
+                    {
+                        bool accionValida = GeneradorDeAtributos.RealizarAccion(personajePrincipal, accion);
+                        if (accionValida)
+                        {
+                            historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Datos.Nombre} realizó acción {accion}.");
+                            accionesRealizadas++;
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Entrada no válida. Por favor, ingrese un número entre 1 y 7.");
+                }
             }
         }
 
-        int accion = selectedOption + 1;
-
-        if (accion >= 1 && accion <= 7)
+        private void MostrarBarraSuperior(Personaje personaje)
         {
-            if (accion == 7)
-            {
-                ElegirHobbie(personajePrincipal);
-                historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Nombre} eligió un nuevo hobbie.");
-                accionesRealizadas++;
-            }
-            else
-            {
-                bool accionValida = GeneradorDeAtributos.RealizarAccion(personajePrincipal, accion);
-                if (accionValida)
-                {
-                    historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Nombre} realizó acción {accion}.");
-                    accionesRealizadas++;
-                }
-            }
-        }
-        else
-        {
-            Console.WriteLine("Entrada no válida. Por favor, ingrese un número entre 1 y 7.");
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine($"Personaje: {personaje.Datos.Nombre} | Inteligencia: {personaje.Caracteristicas.Inteligencia} | Atractivo: {personaje.Caracteristicas.Atractivo} | Carisma: {personaje.Caracteristicas.Carisma} | Hobbie: {personaje.Caracteristicas.Hobbie}");
+            Console.SetCursorPosition(0, 1);
         }
     }
-}
-
-
 }
