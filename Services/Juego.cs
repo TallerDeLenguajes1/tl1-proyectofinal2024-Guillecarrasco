@@ -253,7 +253,7 @@ namespace ProyectoJuegoDeRol.Services
                     }
                     else
                     {
-                        bool accionValida = GeneradorDeAtributos.RealizarAccion(personajePrincipal, accion);
+                        bool accionValida = GeneradorDeAtributos.RealizarAccion(personajePrincipal, accion, true);
                         if (accionValida)
                         {
                             historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Datos.Nombre} realizó acción {accion}.");
@@ -273,6 +273,23 @@ namespace ProyectoJuegoDeRol.Services
             Console.SetCursorPosition(0, 0);
             Console.WriteLine($"Personaje: {personaje.Datos.Nombre} | Inteligencia: {personaje.Caracteristicas.Inteligencia} | Atractivo: {personaje.Caracteristicas.Atractivo} | Carisma: {personaje.Caracteristicas.Carisma} | Hobbie: {personaje.Caracteristicas.Hobbie}");
             Console.SetCursorPosition(0, 1);
+        }
+        private void RealizarAccionesAleatorias(Personaje personaje)
+        {
+            Random random = new Random();
+            for (int i = 0; i < 3; i++)
+            {
+                int accion = random.Next(1, 8);
+                bool accionValida = GeneradorDeAtributos.RealizarAccion(personaje, accion, false);
+                if (accionValida)
+                {
+                    historial.Add($"Acción {i + 1}: {personaje.Datos.Nombre} realizó acción {accion}.");
+                }
+                else
+                {
+                    i--;
+                }
+            }
         }
     }
 }
