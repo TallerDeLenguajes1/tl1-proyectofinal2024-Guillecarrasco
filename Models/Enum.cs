@@ -30,9 +30,10 @@ namespace ProyectoJuegoDeRol.Models
     public enum Hobbie
     {
         Deporte,
-        Fotografía,
+        Fotografia,
         Cine,
         Ajedrez,
-        Leer
+        Videojuegos
     }
 }
+

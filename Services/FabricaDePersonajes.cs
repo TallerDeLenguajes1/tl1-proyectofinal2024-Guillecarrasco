@@ -43,7 +43,7 @@ namespace ProyectoJuegoDeRol.Services
             {
                 Datos = new Datos
                 {
-                    Nombre = "Princesa" + nombre,
+                    Nombre = "Princesa " + nombre,
                     Edad = random.Next(20, 35),
                     Provincia = Provincia.CiudadAutonomadeBuenosAires 
                 },

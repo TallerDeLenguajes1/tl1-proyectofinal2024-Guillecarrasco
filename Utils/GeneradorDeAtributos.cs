@@ -73,8 +73,7 @@ public static bool RealizarAccion(Personaje personaje, int accion, bool mostrarM
             }
             break;
         case 7:
-                var hobbies = Enum.GetValues(typeof(Hobbie));
-                personaje.Caracteristicas.Hobbie = (Hobbie)hobbies.GetValue(new Random().Next(hobbies.Length));
+                
             break;
         default:
             if (mostrarMensajes)

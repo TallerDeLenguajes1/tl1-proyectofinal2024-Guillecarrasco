@@ -18,6 +18,8 @@ namespace ProyectoJuegoDeRol.Services
         private HistorialJson historialJson;
         private List<string> historial;
         private Dictionary<Personaje, double> compatibilidadAnterior;
+        private List<Personaje> personajesEliminados;
+
         public Juego()
         {
             fabrica = new FabricaDePersonajes();
@@ -25,7 +27,8 @@ namespace ProyectoJuegoDeRol.Services
             personajesJson = new PersonajesJson();
             historialJson = new HistorialJson();    
             historial = new List<string>();
-            compatibilidadAnterior = new Dictionary<Personaje, double>();     
+            compatibilidadAnterior = new Dictionary<Personaje, double>();
+            personajesEliminados = new List<Personaje>();     
         }
 
         public async Task IniciarAsync()
@@ -101,6 +104,7 @@ namespace ProyectoJuegoDeRol.Services
                 Console.WriteLine(linea);
             }
         }
+
         private void MostrarVideoIntro()
         {
             Console.WriteLine("Mostrando video de introducción...");
@@ -120,7 +124,6 @@ namespace ProyectoJuegoDeRol.Services
             return jugarDeNuevo;
 
         }            
-
 
         private bool Jugar()
         {
@@ -144,21 +147,22 @@ namespace ProyectoJuegoDeRol.Services
 
                 double compatibilidadPrincipalActual = CalcularCompatibilidad(personajePrincipal);
                 double cambioCompatibilidadPrincipal = compatibilidadPrincipalActual - compatibilidadAnterior[personajePrincipal];
-                Console.WriteLine($"Tu personaje: {compatibilidadPrincipalActual:F2}% (Cambio: {cambioCompatibilidadPrincipal:F2}%)");
+                CentrarTexto($"Tu personaje: {compatibilidadPrincipalActual:F2}% (Cambio: {cambioCompatibilidadPrincipal:F2}%)", 10);
                 compatibilidadAnterior[personajePrincipal] = compatibilidadPrincipalActual;
-
+                CentrarTexto("Presiona cualquier tecla para continuar...", 13);
+                Console.ReadKey();
                 if (compatibilidadPrincipalActual >= 100.0)
                 {
                     Console.Clear();
                     ganadorPrematuro = true;
-                    Console.WriteLine("¡El príncipe no podía quitar los ojos de ti y terminó el concurso antes de tiempo para casarse contigo! Ahora eres la princesa.");
+                    Console.WriteLine($"¡La {princesa.Datos.Nombre} no podía quitar los ojos de ti y terminó el concurso antes de tiempo para casarse contigo! Ahora eres la princesa.");
                 }
                 else
                 {
-
+                    Console.Clear();
                     eliminado = EliminarPersonajesConMenorCompatibilidad(personajePrincipal);
                     semana++;
-                    Console.WriteLine("Presiona cualquier tecla para continuar...");
+                    CentrarTexto("Presiona cualquier tecla para continuar...", 6);
                     Console.ReadKey();
                 }
             }
@@ -166,15 +170,16 @@ namespace ProyectoJuegoDeRol.Services
             if (!eliminado && EsGanador(personajePrincipal) && !ganadorPrematuro)
             {
                 Console.Clear();               
-                string mensajeFinal="¡Felicidades! Has sido seleccionada como la princesa.";
+                string mensajeFinal=$"¡Felicidades! La {princesa.Datos.Nombre} te ha seleccionado como su nuevo esposo, ahora eres príncipe.";
                 CentrarTexto(mensajeFinal);
             }
-            else if(eliminado && !ganadorPrematuro)
+            else
             {
                 Console.Clear();
-                string mensajeFinal="Lo siento, no has sido seleccionada como la princesa.";
+                string mensajeFinal=$"Lo siento, no has sido seleccionado por la {princesa.Datos.Nombre}.";
                 CentrarTexto(mensajeFinal);
             }
+
             CentrarTexto("Presiona cualquier tecla para continuar...",3);
             Console.ReadKey();
             Console.Clear();
@@ -184,14 +189,14 @@ namespace ProyectoJuegoDeRol.Services
 
         private bool MostrarMenu()
         {
-            string[] opciones = { "Mostrar atributos del príncipe", "Reintentar", "Jugar nuevo juego", "Mostrar orden de personajes eliminados", "Cerrar Juego" };
+            string[] opciones = { "Mostrar atributos de la princesa", "Reintentar", "Jugar nuevo juego", "Mostrar orden de personajes eliminados", "Cerrar Juego" };
             int seleccion = MostrarOpcionesYObtenerSeleccion(opciones, false);
             bool jugarDeNuevo=false;
             switch (seleccion)
             {
                 case 0:
                     Console.Clear();
-                    MostrarAtributosPrincipe();
+                    MostrarAtributosPrincesa();
                     break;
                 case 1:
                     jugarDeNuevo = true;
@@ -208,6 +213,7 @@ namespace ProyectoJuegoDeRol.Services
                     break;
                 case 4:
                     Console.Clear();
+                    LimpiarDatos();
                     break;
             }
             return jugarDeNuevo;
@@ -216,12 +222,15 @@ namespace ProyectoJuegoDeRol.Services
         private void MostrarOrdenEliminados()
         {
             Console.Clear();
-            CentrarTexto("Orden de personajes eliminados:");
-
-            foreach (var registro in historial)
+            CentrarTexto("Orden de personajes eliminados:",-7);
+            int i=1;
+            foreach (var personaje in personajesEliminados)
             {
-                CentrarTexto(registro);
+                string registro = $"{personaje.Datos.Nombre} de {personaje.Datos.Provincia}";
+                CentrarTexto(registro,i-7);
+                i++;
             }
+
 
             CentrarTexto("\nPresiona cualquier tecla para volver al menú...");
             Console.ReadKey();
@@ -231,7 +240,7 @@ namespace ProyectoJuegoDeRol.Services
         private void MostrarCompatibilidadConPrincipe()
         {
             Console.Clear();
-            string titulo = "Compatibilidad con el príncipe:";
+            string titulo = "Compatibilidad con la princesa:";
             int consolaAncho = Console.WindowWidth;
             int paddingTitulo = (consolaAncho - titulo.Length) / 2;
             Console.WriteLine(new string(' ', paddingTitulo) + titulo);
@@ -246,7 +255,6 @@ namespace ProyectoJuegoDeRol.Services
                 compatibilidadAnterior[personaje] = compatibilidadActual;
             }
         }
-
 
         private double CalcularCompatibilidad(Personaje personaje)
         {
@@ -271,34 +279,85 @@ namespace ProyectoJuegoDeRol.Services
 
         private void ElegirHobbie(Personaje personaje)
         {
-            var hobbies = Enum.GetValues(typeof(Hobbie)).Cast<Hobbie>().ToList();
-            string[] opcionesHobbies = hobbies.Select(h => h.ToString()).ToArray();
-            string[] botonesHobbies = opcionesHobbies.Select(h => $"⋆˖⁺‧₊☽ {h} ☾₊‧⁺˖⋆").ToArray();
-            Console.WriteLine("Seleccione un hobbie:");
-            int seleccion = MostrarOpcionesYObtenerSeleccion(botonesHobbies, true);
-            personaje.Caracteristicas.Hobbie = hobbies[seleccion];
+            var random = new Random();
+            Dictionary<Hobbie, List<string>> hobbiesOpciones = new Dictionary<Hobbie, List<string>>()
+            {
+                { Hobbie.Deporte, new List<string> { "Practicar fútbol", "Ir al gimnasio", "Hacer yoga" } },
+                { Hobbie.Fotografia, new List<string> { "Tomar fotos en la naturaleza", "Asistir a un taller de fotografía", "Editar fotos en el ordenador" } },
+                { Hobbie.Cine, new List<string> { "Ver una película", "Ir a un festival de cine", "Leer críticas de cine" } },
+                { Hobbie.Ajedrez, new List<string> { "Jugar una partida de ajedrez", "Estudiar aperturas de ajedrez", "Participar en un torneo de ajedrez" } },
+                { Hobbie.Videojuegos, new List<string> { "Jugar pvp de Minecraft", "Comprar un mando nuevo de consola", "Transmitir una partida en vivo" } }
+            };
+
+            List<string> acciones = new List<string>();
+            foreach (var opciones in hobbiesOpciones.Values)
+            {
+                acciones.Add(opciones.OrderBy(x => random.Next()).First());
+            }
+            acciones = acciones.OrderBy(x => random.Next()).ToList();
+
+            string[] botonesAcciones = acciones.Select(a => $"⋆˖⁺‧₊☽ {a} ☾₊‧⁺˖⋆").ToArray();
+            Console.WriteLine("Seleccione una acción:");
+            int seleccionAccion = MostrarOpcionesYObtenerSeleccion(botonesAcciones, true);
+
+            string accionSeleccionada = acciones[seleccionAccion];
+            Hobbie hobbieSeleccionado = hobbiesOpciones.FirstOrDefault(x => x.Value.Contains(accionSeleccionada)).Key;
+            personaje.Caracteristicas.Hobbie = hobbieSeleccionado;
+
+            historial.Add($"Acción: {personaje.Datos.Nombre} realizó {accionSeleccionada}.");
         }
 
         private void RealizarAccionesSemanales()
         {
             int accionesRealizadas = 0;
-            string[] opciones = {
-                "Subir inteligencia", "Bajar inteligencia",
-                "Subir atractivo", "Bajar atractivo", "Subir carisma",
-                "Bajar carisma", "Elegir hobbie de la semana"
+            var random = new Random();
+            Dictionary<string, List<string>> accionesOpciones = new Dictionary<string, List<string>>()
+            {
+                { "Subir inteligencia", new List<string> { "Leer libro de fisica", "Estudiar matemáticas","Asistir a un congreso" } },
+                { "Bajar inteligencia", new List<string> { "Ver TV basura", "Dejar de estudiar", "Proclamar que sos el más inteligente" } },
+                { "Subir atractivo", new List<string> { "Hacer ejercicio", "Ir a un spa", "Arreglarse las uñas" } },
+                { "Bajar atractivo", new List<string> { "No asearse", "Ensuciarse con comida", "Tener celos de los demás"} },
+                { "Subir carisma", new List<string> { "Tomar clases de actuación", "Leer sobre liderazgo", "Mantenerse positivo" } },
+                { "Bajar carisma", new List<string> { "Ser grosero", "Ignorar a la gente", "Ser sarcástico en exceso" } },
+                { "Elegir hobbie de la semana", new List<string> { "Elegir qué se practicará en el día" } }
             };
 
-            string[] botones = opciones.Select(o => $"⋆˖⁺‧₊☽ {o} ☾₊‧⁺˖⋆").ToArray();
-
+            List<string> opciones = accionesOpciones.Keys.ToList();
+            opciones = opciones.OrderBy(x => random.Next()).ToList();
             while (accionesRealizadas < 3)
             {
                 Console.Clear();
                 MostrarBarraSuperior(personajePrincipal);
                 Console.WriteLine("\nSeleccione una acción para realizar:");
+                List<string> botones = opciones.Select(o => $"⋆˖⁺‧₊☽ {accionesOpciones[o].OrderBy(a => random.Next()).First()} ☾₊‧⁺˖⋆").ToList();
+                int seleccion = MostrarOpcionesYObtenerSeleccion(botones.ToArray(), true);
+                string opcionSeleccionada = opciones[seleccion];
 
-                int seleccion = MostrarOpcionesYObtenerSeleccion(botones, true);
-
-                int accion = seleccion + 1;
+                int accion = -1;
+                switch (opcionSeleccionada)
+                {
+                    case "Subir inteligencia":
+                        accion = 1;
+                        break;
+                    case "Bajar inteligencia":
+                        accion = 2;
+                        break;
+                    case "Subir atractivo":
+                        accion = 3;
+                        break;
+                    case "Bajar atractivo":
+                        accion = 4;
+                        break;
+                    case "Subir carisma":
+                        accion = 5;
+                        break;
+                    case "Bajar carisma":
+                        accion = 6;
+                        break;
+                    case "Elegir hobbie de la semana":
+                        accion = 7;
+                        break;
+                }
 
                 bool accionValida = GeneradorDeAtributos.RealizarAccion(personajePrincipal, accion, true);
                 if (accionValida)
@@ -306,8 +365,8 @@ namespace ProyectoJuegoDeRol.Services
                     string descripcionAccion;
                     if (accion == 7)
                     {
-                        descripcionAccion = $"eligió un nuevo hobbie: {personajePrincipal.Caracteristicas.Hobbie}.";
                         ElegirHobbie(personajePrincipal);
+                        descripcionAccion = $"eligió un nuevo hobbie: {personajePrincipal.Caracteristicas.Hobbie}.";
                     }
                     else
                     {
@@ -318,6 +377,7 @@ namespace ProyectoJuegoDeRol.Services
                 }
             }
         }
+
 
         private int MostrarOpcionesYObtenerSeleccion(string[] opciones, bool Barra)
         {
@@ -410,6 +470,7 @@ namespace ProyectoJuegoDeRol.Services
                 }
             }
         }
+
         private bool EliminarPersonajesConMenorCompatibilidad(Personaje personajePrincipal)
         {
             var compatibilidades = personajes.Select(p => new
@@ -423,19 +484,26 @@ namespace ProyectoJuegoDeRol.Services
             var personajesAEliminar = compatibilidades.OrderBy(c => c.Compatibilidad).Take(3).Select(c => c.Personaje).ToList();
 
             bool eliminado = false;
+            int i=0;
             foreach (var personaje in personajesAEliminar)
             {
                 if (personaje == personajePrincipal)
                 {
                     eliminado = true;
-                    Console.WriteLine($"Has sido eliminada. Compatibilidad: {CalcularCompatibilidad(personajePrincipal):F2}%");
+                    string mensaje = $"Has sido eliminado. Compatibilidad: {CalcularCompatibilidad(personajePrincipal):F2}%";
+                    CentrarTexto(mensaje,i);
+                    personajesEliminados.Add(personajePrincipal);
+                    i++;
                 }
                 else
                 {
                     personajes.Remove(personaje);
-                    Console.WriteLine($"Eliminada: {personaje.Datos.Nombre} de {personaje.Datos.Provincia}");
+                    string mensaje = $"Eliminado: {personaje.Datos.Nombre} de {personaje.Datos.Provincia}";
+                    CentrarTexto(mensaje,i);
+                    personajesEliminados.Add(personaje);
+                    i++;
                 }
-                historial.Add($"Eliminada: {personaje.Datos.Nombre} de {personaje.Datos.Provincia}.");
+                historial.Add($"Eliminado: {personaje.Datos.Nombre} de {personaje.Datos.Provincia}.");
             }
 
             return eliminado;
@@ -453,6 +521,7 @@ namespace ProyectoJuegoDeRol.Services
 
             return diferenciaPrincipal <= diferenciasRestantes.Min();
         }
+
         private void MostrarAtributosPersonaje(Personaje personaje)
         {
             CentrarTexto(@$"Atributos de {personaje.Datos.Nombre}
@@ -462,10 +531,10 @@ namespace ProyectoJuegoDeRol.Services
             Hobbie: {personaje.Caracteristicas.Hobbie}");
         }
 
-        private void MostrarAtributosPrincipe()
+        private void MostrarAtributosPrincesa()
         {
             CentrarTexto(
-            @$"Atributos del Príncipe:
+            @$"     Atributos de la {princesa.Datos.Nombre}:
             Inteligencia: {princesa.Caracteristicas.Inteligencia}
             Atractivo: {princesa.Caracteristicas.Atractivo}
             Carisma: {princesa.Caracteristicas.Carisma}
