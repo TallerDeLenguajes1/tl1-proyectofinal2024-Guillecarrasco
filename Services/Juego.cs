@@ -59,7 +59,6 @@ namespace ProyectoJuegoDeRol.Services
         private void MostrarPantallaInicial()
             {
                 Console.WriteLine("La seleccion");
-
                 Console.ReadKey();
                 Console.Clear();
             }
@@ -163,8 +162,24 @@ namespace ProyectoJuegoDeRol.Services
             return compatibilidadTotal * 100;
         }
 
+        private void ElegirHobbie(Personaje personaje)
+        {
+            var hobbies = Enum.GetValues(typeof(Hobbie)).Cast<Hobbie>().ToList();
+            Console.WriteLine("Seleccione un hobbie:");
+            for (int i = 0; i < hobbies.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {hobbies[i]}");
+            }
 
+            int seleccion;
+            do
+            {
+                Console.WriteLine("Ingrese el número del hobbie que desea seleccionar:");
+                seleccion = int.Parse(Console.ReadLine()) - 1;
+            } while (seleccion < 0 || seleccion >= hobbies.Count);
 
+            personaje.Caracteristicas.Hobbie = hobbies[seleccion];
+        }
 
         private void RealizarAccionesSemanales()
         {
@@ -184,7 +199,7 @@ namespace ProyectoJuegoDeRol.Services
 
                 string[] botones = opciones.Select(o => $"⋆˖⁺‧₊☽ {o} ☾₊‧⁺˖⋆").ToArray();
 
-                int selectedOption = 0;
+                int seleccion = 0;
 
                 while (true)
                 {
@@ -192,25 +207,25 @@ namespace ProyectoJuegoDeRol.Services
                     MostrarBarraSuperior(personajePrincipal);
                     Console.WriteLine("\nSeleccione una acción para realizar:");
 
-                    int consoleWidth = Console.WindowWidth;
-                    int consoleHeight = Console.WindowHeight;
-                    int botonesHeight = botones.Length + botones.Length; 
-                    int verticalPadding = (consoleHeight - (botonesHeight + 1)) / 2;
+                    int anchoConsola = Console.WindowWidth;
+                    int alturaConsola = Console.WindowHeight;
+                    int alturaBotones = botones.Length + botones.Length; 
+                    int paddingVertical = (alturaConsola - (alturaBotones + 1)) / 2;
 
                     
-                    for (int i = 0; i < verticalPadding; i++)
+                    for (int i = 0; i < paddingVertical; i++)
                     {
                         Console.WriteLine();
                     }
                     string marco1 = "╔══════ ❀•°❀°•❀ ══════╗";
-                    int padding2 = (consoleWidth - marco1.Length) / 2;
+                    int padding2 = (anchoConsola - marco1.Length) / 2;
                     Console.WriteLine(new string(' ', padding2) + marco1);
                     for (int i = 0; i < botones.Length; i++)
                     {
                         string boton = botones[i];
-                        int padding = (consoleWidth - boton.Length) / 2;
+                        int padding = (anchoConsola - boton.Length) / 2;
 
-                        if (i == selectedOption)
+                        if (i == seleccion)
                         {
                             Console.BackgroundColor = ConsoleColor.Gray;
                             Console.ForegroundColor = ConsoleColor.Black;
@@ -222,18 +237,18 @@ namespace ProyectoJuegoDeRol.Services
                         Console.WriteLine(); 
                     }
                     string marco2 = "╚══════ ❀•°❀°•❀ ══════╝";
-                    int padding3 = (consoleWidth - marco2.Length) / 2;
+                    int padding3 = (anchoConsola - marco2.Length) / 2;
                     Console.WriteLine(new string(' ', padding3) + marco2);
 
                     ConsoleKeyInfo keyInfo = Console.ReadKey();
 
                     if (keyInfo.Key == ConsoleKey.UpArrow)
                     {
-                        selectedOption = (selectedOption == 0) ? botones.Length - 1 : selectedOption - 1;
+                        seleccion = (seleccion == 0) ? botones.Length - 1 : seleccion - 1;
                     }
                     else if (keyInfo.Key == ConsoleKey.DownArrow)
                     {
-                        selectedOption = (selectedOption == botones.Length - 1) ? 0 : selectedOption + 1;
+                        seleccion = (seleccion == botones.Length - 1) ? 0 : seleccion + 1;
                     }
                     else if (keyInfo.Key == ConsoleKey.Enter)
                     {
@@ -241,7 +256,7 @@ namespace ProyectoJuegoDeRol.Services
                     }
                 }
 
-                int accion = selectedOption + 1;
+                int accion = seleccion + 1;
 
                 if (accion >= 1 && accion <= 7)
                 {
@@ -290,6 +305,72 @@ namespace ProyectoJuegoDeRol.Services
                     i--;
                 }
             }
+        }
+        private bool EliminarPersonajesConMenorCompatibilidad(Personaje personajePrincipal)
+        {
+            var compatibilidades = personajes.Select(p => new
+            {
+                Personaje = p,
+                Compatibilidad = CalcularCompatibilidad(p)
+            }).ToList();
+
+            compatibilidades.Add(new { Personaje = personajePrincipal, Compatibilidad = CalcularCompatibilidad(personajePrincipal) });
+
+            var personajesAEliminar = compatibilidades.OrderBy(c => c.Compatibilidad).Take(3).Select(c => c.Personaje).ToList();
+
+            bool eliminado = false;
+            foreach (var personaje in personajesAEliminar)
+            {
+                if (personaje == personajePrincipal)
+                {
+                    eliminado = true;
+                    Console.WriteLine($"Has sido eliminada. Compatibilidad: {CalcularCompatibilidad(personajePrincipal):F2}%");
+                }
+                else
+                {
+                    personajes.Remove(personaje);
+                    Console.WriteLine($"Eliminada: {personaje.Datos.Nombre} de {personaje.Datos.Provincia}");
+                }
+                historial.Add($"Eliminada: {personaje.Datos.Nombre} de {personaje.Datos.Provincia}.");
+            }
+
+            return eliminado;
+        }
+
+        private bool EsGanador(Personaje personaje)
+        {
+            var diferenciaPrincipal = Math.Abs(personaje.Caracteristicas.Inteligencia - principe.Caracteristicas.Inteligencia) +
+                                      Math.Abs(personaje.Caracteristicas.Atractivo - principe.Caracteristicas.Atractivo) +
+                                      Math.Abs(personaje.Caracteristicas.Carisma - principe.Caracteristicas.Carisma);
+
+            var diferenciasRestantes = personajes.Select(p => Math.Abs(p.Caracteristicas.Inteligencia - principe.Caracteristicas.Inteligencia) +
+                                                              Math.Abs(p.Caracteristicas.Atractivo - principe.Caracteristicas.Atractivo) +
+                                                              Math.Abs(p.Caracteristicas.Carisma - principe.Caracteristicas.Carisma)).ToList();
+
+            return diferenciaPrincipal <= diferenciasRestantes.Min();
+        }
+        private void MostrarAtributosPersonaje(Personaje personaje)
+        {
+            Console.WriteLine($"Atributos de {personaje.Datos.Nombre}:");
+            Console.WriteLine($"Inteligencia: {personaje.Caracteristicas.Inteligencia}");
+            Console.WriteLine($"Atractivo: {personaje.Caracteristicas.Atractivo}");
+            Console.WriteLine($"Carisma: {personaje.Caracteristicas.Carisma}");
+            Console.WriteLine($"Hobbie: {personaje.Caracteristicas.Hobbie}");
+        }
+
+        private void MostrarAtributosPrincipe()
+        {
+            Console.WriteLine($"Atributos del Príncipe:");
+            Console.WriteLine($"Inteligencia: {principe.Caracteristicas.Inteligencia}");
+            Console.WriteLine($"Atractivo: {principe.Caracteristicas.Atractivo}");
+            Console.WriteLine($"Carisma: {principe.Caracteristicas.Carisma}");
+            Console.WriteLine($"Hobbie: {principe.Caracteristicas.Hobbie}");
+        }
+
+        private void LimpiarDatos()
+        {
+            personajesJson.BorrarDatos("Data/personajes.json");
+            historialJson.BorrarDatos("Data/historial.json");
         }
     }
 }
