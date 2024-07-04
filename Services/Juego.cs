@@ -184,104 +184,105 @@ namespace ProyectoJuegoDeRol.Services
         private void RealizarAccionesSemanales()
         {
             int accionesRealizadas = 0;
+            string[] opciones = {
+                "Subir inteligencia", "Bajar inteligencia",
+                "Subir atractivo", "Bajar atractivo", "Subir carisma",
+                "Bajar carisma", "Elegir hobbie de la semana"
+            };
+
+            string[] botones = opciones.Select(o => $"⋆˖⁺‧₊☽ {o} ☾₊‧⁺˖⋆").ToArray();
+
             while (accionesRealizadas < 3)
             {
                 Console.Clear();
                 MostrarBarraSuperior(personajePrincipal);
-
                 Console.WriteLine("\nSeleccione una acción para realizar:");
 
-                string[] opciones = {
-                    "Subir inteligencia", "Bajar inteligencia",
-                    "Subir atractivo", "Bajar atractivo", "Subir carisma",
-                    "Bajar carisma", "Elegir hobbie de la semana"
-                };
-
-                string[] botones = opciones.Select(o => $"⋆˖⁺‧₊☽ {o} ☾₊‧⁺˖⋆").ToArray();
-
-                int seleccion = 0;
-
-                while (true)
-                {
-                    Console.Clear();
-                    MostrarBarraSuperior(personajePrincipal);
-                    Console.WriteLine("\nSeleccione una acción para realizar:");
-
-                    int anchoConsola = Console.WindowWidth;
-                    int alturaConsola = Console.WindowHeight;
-                    int alturaBotones = botones.Length + botones.Length; 
-                    int paddingVertical = (alturaConsola - (alturaBotones + 1)) / 2;
-
-                    
-                    for (int i = 0; i < paddingVertical; i++)
-                    {
-                        Console.WriteLine();
-                    }
-                    string marco1 = "╔══════ ❀•°❀°•❀ ══════╗";
-                    int padding2 = (anchoConsola - marco1.Length) / 2;
-                    Console.WriteLine(new string(' ', padding2) + marco1);
-                    for (int i = 0; i < botones.Length; i++)
-                    {
-                        string boton = botones[i];
-                        int padding = (anchoConsola - boton.Length) / 2;
-
-                        if (i == seleccion)
-                        {
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.ForegroundColor = ConsoleColor.Black;
-                        }
-
-                        Console.WriteLine(new string(' ', padding) + boton);
-
-                        Console.ResetColor();
-                        Console.WriteLine(); 
-                    }
-                    string marco2 = "╚══════ ❀•°❀°•❀ ══════╝";
-                    int padding3 = (anchoConsola - marco2.Length) / 2;
-                    Console.WriteLine(new string(' ', padding3) + marco2);
-
-                    ConsoleKeyInfo keyInfo = Console.ReadKey();
-
-                    if (keyInfo.Key == ConsoleKey.UpArrow)
-                    {
-                        seleccion = (seleccion == 0) ? botones.Length - 1 : seleccion - 1;
-                    }
-                    else if (keyInfo.Key == ConsoleKey.DownArrow)
-                    {
-                        seleccion = (seleccion == botones.Length - 1) ? 0 : seleccion + 1;
-                    }
-                    else if (keyInfo.Key == ConsoleKey.Enter)
-                    {
-                        break;
-                    }
-                }
+                int seleccion = MostrarOpcionesYObtenerSeleccion(botones);
 
                 int accion = seleccion + 1;
 
-                if (accion >= 1 && accion <= 7)
+                if (accion == 7)
                 {
-                    if (accion == 7)
-                    {
-                        ElegirHobbie(personajePrincipal);
-                        historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Datos.Nombre} eligió un nuevo hobbie.");
-                        accionesRealizadas++;
-                    }
-                    else
-                    {
-                        bool accionValida = GeneradorDeAtributos.RealizarAccion(personajePrincipal, accion, true);
-                        if (accionValida)
-                        {
-                            historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Datos.Nombre} realizó acción {accion}.");
-                            accionesRealizadas++;
-                        }
-                    }
+                    ElegirHobbie(personajePrincipal);
+                    historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Datos.Nombre} eligió un nuevo hobbie.");
                 }
                 else
                 {
-                    Console.WriteLine("Entrada no válida. Por favor, ingrese un número entre 1 y 7.");
+                    bool accionValida = GeneradorDeAtributos.RealizarAccion(personajePrincipal, accion, true);
+                    if (accionValida)
+                    {
+                        historial.Add($"Acción {accionesRealizadas + 1}: {personajePrincipal.Datos.Nombre} realizó acción {accion}.");
+                    }
                 }
+
+                accionesRealizadas++;
             }
         }
+
+        private int MostrarOpcionesYObtenerSeleccion(string[] botones)
+        {
+            int seleccion = 0;
+            while (true)
+            {
+                Console.Clear();
+                MostrarBarraSuperior(personajePrincipal);
+                Console.WriteLine("\nSeleccione una acción para realizar:");
+
+                int anchoConsola = Console.WindowWidth;
+                int alturaConsola = Console.WindowHeight;
+                int alturaBotones = botones.Length * 2; 
+                int paddingVertical = (alturaConsola - (alturaBotones + 1)) / 2;
+
+                for (int i = 0; i < paddingVertical; i++)
+                {
+                    Console.WriteLine();
+                }
+
+                string marco1 = "╔══════ ❀•°❀°•❀ ══════╗";
+                int padding2 = (anchoConsola - marco1.Length) / 2;
+                Console.WriteLine(new string(' ', padding2) + marco1);
+
+                for (int i = 0; i < botones.Length; i++)
+                {
+                    string boton = botones[i];
+                    int padding = (anchoConsola - boton.Length) / 2;
+
+                    if (i == seleccion)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                    }
+
+                    Console.WriteLine(new string(' ', padding) + boton);
+
+                    Console.ResetColor();
+                    Console.WriteLine();
+                }
+
+                string marco2 = "╚══════ ❀•°❀°•❀ ══════╝";
+                int padding3 = (anchoConsola - marco2.Length) / 2;
+                Console.WriteLine(new string(' ', padding3) + marco2);
+
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+                if (keyInfo.Key == ConsoleKey.UpArrow)
+                {
+                    seleccion = (seleccion == 0) ? botones.Length - 1 : seleccion - 1;
+                }
+                else if (keyInfo.Key == ConsoleKey.DownArrow)
+                {
+                    seleccion = (seleccion == botones.Length - 1) ? 0 : seleccion + 1;
+                }
+                else if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    break;
+                }
+            }
+
+            return seleccion;
+        }
+
 
         private void MostrarBarraSuperior(Personaje personaje)
         {
